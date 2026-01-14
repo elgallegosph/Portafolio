@@ -5,11 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mi Portafolio - Mateo Sax</title>
     <style>
-        body { margin: 0; font-family: 'Helvetica Neue', sans-serif; background: #0f0f0f; color: white; line-height: 1.6; }
+        body { 
+            margin: 0; 
+            font-family: 'Helvetica Neue', sans-serif; 
+            background: #0f0f0f; 
+            color: white; 
+            line-height: 1.6; 
+            /* --- CAMBIO 1: IMAGEN DE FONDO --- */
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('fondo.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        
         header { padding: 60px 20px; text-align: center; }
+        
+        /* --- CAMBIO 2: ESTILO DEL BANNER --- */
+        .banner-superior {
+            max-width: 250px; /* Ajusta el tamaño aquí */
+            height: auto;
+            margin-bottom: 20px;
+        }
+
         h1 { font-weight: 200; letter-spacing: 8px; text-transform: uppercase; margin-bottom: 10px; }
         
-        /* Contenedor de cada sección */
         .seccion { padding: 40px 20px; max-width: 1200px; margin: 0 auto; }
         .titulo-categoria { 
             font-size: 1.5rem; 
@@ -21,7 +40,6 @@
             letter-spacing: 3px;
         }
 
-        /* Cuadrícula estilo Masonry */
         .galeria {
             column-count: 3;
             column-gap: 20px;
@@ -37,7 +55,6 @@
 
         .galeria img:hover { transform: translateY(-5px); filter: brightness(1.2); }
 
-        /* Ajuste para celulares */
         @media (max-width: 900px) { .galeria { column-count: 2; } }
         @media (max-width: 600px) { .galeria { column-count: 1; } }
     </style>
@@ -45,6 +62,7 @@
 <body>
 
 <header>
+    <img src="banner.png" alt="M.G. Visuals" class="banner-superior">
     <h1>Mateo Sax</h1>
     <p>PORTAFOLIO FOTOGRÁFICO</p>
 </header>
