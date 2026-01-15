@@ -3,65 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portafolio - Mateo Sax</title>
+    <title>Mi Portafolio - Mateo Sax</title>
     <style>
-        /* Desplazamiento suave */
-        html { scroll-behavior: smooth; }
-
         body { 
             margin: 0; 
             font-family: 'Helvetica Neue', sans-serif; 
             color: white; 
             line-height: 1.6; 
-            background-color: #0f0f0f; 
+            background-color: #0f0f0f; /* Color de fondo base muy oscuro */
         }
         
         /* EFECTO MARCA DE AGUA */
         body::before {
             content: "";
             position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* Imagen de fondo con opacidad muy baja (0.1) para efecto marca de agua */
             background-image: url('fondo.jpg');
             background-size: cover;
             background-position: center;
-            opacity: 0.12; 
-            z-index: -1; 
+            opacity: 0.15; 
+            z-index: -1; /* Se mantiene detrás de todo */
             pointer-events: none;
         }
         
-        /* ANIMACIONES */
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes revealPhotos {
-            from { opacity: 0; filter: blur(5px); }
-            to { opacity: 1; filter: blur(0); }
-        }
-
-        header { 
-            padding: 80px 20px 40px 20px; 
-            text-align: center;
-            animation: fadeInDown 1.5s ease-out;
-        }
+        header { padding: 80px 20px; text-align: center; }
         
         .banner-superior {
-            max-width: 500px; 
-            width: 100%; 
+            max-width: 500px; /* AQUI SE CAMBIO EL TAMAÑO A MAS GRANDE */
+            width: 100%; /* Asegura que en móviles no se corte */
             height: auto;
             margin-bottom: 25px;
             opacity: 0.9;
             filter: drop-shadow(0 5px 15px rgba(0,0,0,0.5));
         }
 
-        h1 { font-weight: 200; letter-spacing: 8px; text-transform: uppercase; margin-bottom: 5px; }
+        h1 { font-weight: 200; letter-spacing: 8px; text-transform: uppercase; margin-bottom: 10px; }
+        p { color: #888; letter-spacing: 4px; text-transform: uppercase; font-size: 0.9rem; }
         
-        /* MENÚ DE CATEGORÍAS */
-        nav { 
-            text-align: center; 
-            margin-bottom: 50px; 
-            animation: fadeInDown 2s ease-out;
+        .seccion { padding: 40px 20px; max-width: 1200px; margin: 0 auto; }
+        .titulo-categoria { 
+            font-size: 1.2rem; 
+            border-bottom: 1px solid #333; 
+            padding-bottom: 10px; 
+            margin-bottom: 35px; 
+            color: #aaa;
+            text-transform: uppercase;
+            letter-spacing: 4px;
         }
-        nav a
+
+        .galeria {
+            column-count: 3;
+            column-gap: 20px;
+        }
+
+        .galeria img {
+            width: 100%;
+            display: block;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            transition: all 0.5s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .galeria img:hover { 
+            transform: scale(1.02); 
+            filter: brightness(1.1); 
+        }
+
+        @media (max-width: 900px) { .galeria { column-count: 2; } }
+        @media (max-width: 600px) { .galeria { column-count: 1; } }
+    </style>
+</head>
+<body>
+
+<header>
+    <img src="banner.png" alt="M.G. Visuals" class="banner-superior">
+    <h1>Mateo Sax</h1>
+    <p>Portafolio Fotográfico</p>
+</header>
+
+<section class="seccion">
+    <h2 class="titulo-categoria">Paisajes y Naturaleza</h2>
+    <div class="galeria">
+        <img src="foto_paisaje1.jpg" alt="Paisaje">
+        <img src="foto_paisaje2.jpg" alt="Paisaje">
+        <img src="foto_paisaje3.jpg" alt="Paisaje">
+    </div>
+</section>
+
+<section class="seccion">
+    <h2 class="titulo-categoria">Retratos y Personas</h2>
+    <div class="galeria">
+        <img src="foto_retrato1.jpg" alt="Retrato">
+        <img src="foto_retrato2.jpg" alt="Retrato">
+    </div>
+</section>
+
+<section class="seccion">
+    <h2 class="titulo-categoria">Arquitectura y Urbano</h2>
+    <div class="galeria">
+        <img src="foto_urbano1.jpg" alt="Urbano">
+        <img src="foto_urbano2.jpg" alt="Urbano">
+    </div>
+</section>
+
+</body>
+</html>
