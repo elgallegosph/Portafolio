@@ -33,7 +33,8 @@
         header { padding: 80px 20px; text-align: center; }
         
         .banner-superior {
-            max-width: 280px; 
+            max-width: 500px; /* AQUI SE CAMBIO EL TAMAÑO A MAS GRANDE */
+            width: 100%; /* Asegura que en móviles no se corte */
             height: auto;
             margin-bottom: 25px;
             opacity: 0.9;
@@ -74,41 +75,4 @@
         }
 
         @media (max-width: 900px) { .galeria { column-count: 2; } }
-        @media (max-width: 600px) { .galeria { column-count: 1; } }
-    </style>
-</head>
-<body>
-
-<header>
-    <img src="banner.png" alt="M.G. Visuals" class="banner-superior">
-    <h1>Mateo Sax</h1>
-    <p>Portafolio Fotográfico</p>
-</header>
-
-<section class="seccion">
-    <h2 class="titulo-categoria">Paisajes y Naturaleza</h2>
-    <div class="galeria">
-        <img src="foto_paisaje1.jpg" alt="Paisaje">
-        <img src="foto_paisaje2.jpg" alt="Paisaje">
-        <img src="foto_paisaje3.jpg" alt="Paisaje">
-    </div>
-</section>
-
-<section class="seccion">
-    <h2 class="titulo-categoria">Retratos y Personas</h2>
-    <div class="galeria">
-        <img src="foto_retrato1.jpg" alt="Retrato">
-        <img src="foto_retrato2.jpg" alt="Retrato">
-    </div>
-</section>
-
-<section class="seccion">
-    <h2 class="titulo-categoria">Arquitectura y Urbano</h2>
-    <div class="galeria">
-        <img src="foto_urbano1.jpg" alt="Urbano">
-        <img src="foto_urbano2.jpg" alt="Urbano">
-    </div>
-</section>
-
-</body>
-</html>
+        @media (max-width: 600px) {
