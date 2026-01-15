@@ -37,7 +37,23 @@
             width: 100%; height: 100%; background: rgba(0,0,0,0.95);
             justify-content: center; align-items: center; cursor: zoom-out;
         }
-        #visor img { max-width: 90%; max-height: 90%; border-radius: 4px; box-shadow: 0 0 30px rgba(0,0,0,0.5); }
+        #visor img { max-width: 90%; max-height: 90%; border-radius: 4px; }
+
+        /* BOTÓN WHATSAPP FLOTANTE */
+        .wsp-flotante {
+            position: fixed; bottom: 20px; right: 20px;
+            background-color: #25d366; color: white;
+            width: 60px; height: 60px; border-radius: 50%;
+            text-align: center; font-size: 30px; line-height: 60px;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.5); z-index: 100;
+            text-decoration: none; transition: 0.3s;
+        }
+        .wsp-flotante:hover { transform: scale(1.1); background-color: #128c7e; }
+
+        /* REDES SOCIALES PIE DE PÁGINA */
+        footer { padding: 60px 20px; text-align: center; border-top: 1px solid #222; margin-top: 50px; }
+        .redes a { color: #888; text-decoration: none; margin: 0 15px; text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; transition: 0.3s; }
+        .redes a:hover { color: white; }
 
         @media (max-width: 1000px) { .galeria { column-count: 1; } }
     </style>
@@ -49,6 +65,10 @@
     <h1>Mateo Sax</h1>
     <p>Portafolio Fotográfico</p>
 </header>
+
+<a href="https://api.whatsapp.com/send?phone=TU_NUMERO_AQUI" class="wsp-flotante" target="_blank">
+    <span>📱</span>
+</a>
 
 <div id="visor" onclick="this.style.display='none'">
     <img id="fotoGrande" src="" alt="Vista grande">
@@ -80,6 +100,15 @@
         <img src="foto_urbano2.jpg" onclick="abrirFoto(this.src)">
     </div>
 </section>
+
+<footer>
+    <div class="redes">
+        <a href="https://instagram.com/TU_USUARIO" target="_blank">Instagram</a>
+        <a href="mailto:tuemail@ejemplo.com">Correo</a>
+        <a href="#">TikTok</a>
+    </div>
+    <p style="font-size: 0.7rem; color: #444; margin-top: 20px;">© 2024 M.G. VISUALS</p>
+</footer>
 
 <script>
     function abrirFoto(url) {
