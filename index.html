@@ -10,7 +10,7 @@
             font-family: 'Helvetica Neue', sans-serif; 
             color: white; 
             line-height: 1.6; 
-            background-color: #0f0f0f; /* Color de fondo base muy oscuro */
+            background-color: #0f0f0f; 
         }
         
         /* EFECTO MARCA DE AGUA */
@@ -21,20 +21,35 @@
             left: 0;
             width: 100%;
             height: 100%;
-            /* Imagen de fondo con opacidad muy baja (0.1) para efecto marca de agua */
             background-image: url('fondo.jpg');
             background-size: cover;
             background-position: center;
             opacity: 0.15; 
-            z-index: -1; /* Se mantiene detrás de todo */
+            z-index: -1; 
             pointer-events: none;
         }
         
-        header { padding: 80px 20px; text-align: center; }
+        /* ANIMACIÓN DE ENTRADA */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        header { 
+            padding: 80px 20px; 
+            text-align: center;
+            animation: fadeInDown 1.5s ease-out; /* Aplica la animación al cabezal */
+        }
         
         .banner-superior {
-            max-width: 500px; /* AQUI SE CAMBIO EL TAMAÑO A MAS GRANDE */
-            width: 100%; /* Asegura que en móviles no se corte */
+            max-width: 500px; 
+            width: 100%; 
             height: auto;
             margin-bottom: 25px;
             opacity: 0.9;
@@ -75,4 +90,12 @@
         }
 
         @media (max-width: 900px) { .galeria { column-count: 2; } }
-        @media (max-width: 600px) {
+        @media (max-width: 600px) { .galeria { column-count: 1; } }
+    </style>
+</head>
+<body>
+
+<header>
+    <img src="banner.png" alt="M.G. Visuals" class="banner-superior">
+    <h1>Mateo Sax</h1>
+    <p>Portafolio Fotográfico</p>
