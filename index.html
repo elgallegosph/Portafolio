@@ -5,108 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mi Portafolio - Mateo Sax</title>
     <style>
-        body { 
-            margin: 0; 
-            font-family: 'Helvetica Neue', sans-serif; 
-            color: white; 
-            line-height: 1.6; 
-            background-color: #0f0f0f; 
-        }
+        body { margin: 0; font-family: 'Helvetica Neue', sans-serif; color: white; background-color: #0f0f0f; line-height: 1.6; }
         
-        /* EFECTO MARCA DE AGUA */
+        /* MARCA DE AGUA */
         body::before {
-            content: "";
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background-image: url('fondo.png');
-            background-size: cover;
-            background-position: center;
-            opacity: 0.15; 
-            z-index: -1; 
-            pointer-events: none;
+            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('fondo.png'); background-size: cover; background-position: center;
+            opacity: 0.15; z-index: -1; pointer-events: none;
         }
         
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        header { 
-            padding: 80px 20px; 
-            text-align: center; 
-            animation: fadeInDown 1.5s ease-out;
-        }
-        
-        .banner-superior {
-            max-width: 500px; 
-            width: 100%; 
-            height: auto;
-            margin-bottom: 25px;
-            opacity: 0.9;
-            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.5));
-        }
-
+        header { padding: 80px 20px; text-align: center; }
+        .banner-superior { max-width: 500px; width: 100%; height: auto; margin-bottom: 25px; filter: drop-shadow(0 5px 15px rgba(0,0,0,0.5)); }
         h1 { font-weight: 200; letter-spacing: 8px; text-transform: uppercase; margin-bottom: 10px; }
         p { color: #888; letter-spacing: 4px; text-transform: uppercase; font-size: 0.9rem; }
-        
+
+        /* GALERÍA ESTILO PINTEREST (FOTOS COMPLETAS) */
         .seccion { padding: 40px 20px; max-width: 1400px; margin: 0 auto; }
-        
-        .titulo-categoria { 
-            font-size: 1.2rem; 
-            border-bottom: 1px solid #333; 
-            padding-bottom: 10px; 
-            margin-bottom: 35px; 
-            color: #aaa;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-        }
+        .titulo-categoria { font-size: 1.2rem; border-bottom: 1px solid #333; padding-bottom: 10px; margin-bottom: 35px; color: #aaa; text-transform: uppercase; letter-spacing: 4px; }
 
-        /* --- NUEVO DISEÑO DE GALERÍA (ESTILO GRID MODERNO) --- */
-        .galeria {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            grid-auto-rows: 400px; /* Altura base de las fotos */
-            grid-gap: 20px;
-            grid-auto-flow: dense; /* Rellena huecos automáticamente */
-        }
-
+        .galeria { column-count: 2; column-gap: 30px; }
         .galeria img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover; /* Recorta la foto para que llene el espacio sin deformarse */
-            border-radius: 4px;
-            transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+            width: 100%; display: block; margin-bottom: 30px; border-radius: 4px;
+            cursor: pointer; transition: transform 0.4s ease, filter 0.4s ease;
             box-shadow: 0 4px 20px rgba(0,0,0,0.5);
         }
+        .galeria img:hover { transform: scale(1.02); filter: brightness(1.1); }
 
-        /* Hace que cada 3 fotos, una sea el doble de ancha */
-        .galeria img:nth-child(3n) {
-            grid-column: span 2;
+        /* VISOR DE FOTOS (LIGHTBOX) */
+        #visor {
+            display: none; position: fixed; z-index: 1000; top: 0; left: 0;
+            width: 100%; height: 100%; background: rgba(0,0,0,0.95);
+            justify-content: center; align-items: center; cursor: zoom-out;
         }
+        #visor img { max-width: 90%; max-height: 90%; border-radius: 4px; box-shadow: 0 0 30px rgba(0,0,0,0.5); }
 
-        /* Hace que cada 5 fotos, una sea el doble de alta */
-        .galeria img:nth-child(5n) {
-            grid-row: span 2;
-        }
-
-        .galeria img:hover { 
-            transform: scale(1.02); 
-            filter: brightness(1.2); 
-            z-index: 2;
-        }
-
-        /* Ajuste para móviles: Todo a una columna */
-        @media (max-width: 768px) {
-            .galeria {
-                grid-template-columns: 1fr;
-                grid-auto-rows: auto;
-            }
-            .galeria img:nth-child(3n), .galeria img:nth-child(5n) {
-                grid-column: auto;
-                grid-row: auto;
-            }
-        }
+        @media (max-width: 1000px) { .galeria { column-count: 1; } }
     </style>
 </head>
 <body>
@@ -117,32 +50,43 @@
     <p>Portafolio Fotográfico</p>
 </header>
 
+<div id="visor" onclick="this.style.display='none'">
+    <img id="fotoGrande" src="" alt="Vista grande">
+</div>
+
 <section class="seccion">
     <h2 class="titulo-categoria">Paisajes y Naturaleza</h2>
     <div class="galeria">
-        <img src="foto_paisaje1.jpg" alt="Paisaje">
-        <img src="foto_paisaje2.jpg" alt="Paisaje">
+        <img src="foto_paisaje1.jpg" onclick="abrirFoto(this.src)">
+        <img src="foto_paisaje2.jpg" onclick="abrirFoto(this.src)">
     </div>
 </section>
 
 <section class="seccion">
     <h2 class="titulo-categoria">Retratos y Personas</h2>
     <div class="galeria">
-        <img src="retratosypersonas/foto1.jpg" alt="Retrato">
-        <img src="retratosypersonas/foto2.jpg" alt="Retrato">
-        <img src="retratosypersonas/foto3.jpg" alt="Retrato">
-        <img src="retratosypersonas/foto4.jpg" alt="Retrato">
-        <img src="retratosypersonas/foto5.jpg" alt="Retrato">
+        <img src="retratosypersonas/foto1.jpg" onclick="abrirFoto(this.src)">
+        <img src="retratosypersonas/foto2.jpg" onclick="abrirFoto(this.src)">
+        <img src="retratosypersonas/foto3.jpg" onclick="abrirFoto(this.src)">
+        <img src="retratosypersonas/foto4.jpg" onclick="abrirFoto(this.src)">
+        <img src="retratosypersonas/foto5.jpg" onclick="abrirFoto(this.src)">
     </div>
 </section>
 
 <section class="seccion">
     <h2 class="titulo-categoria">Arquitectura y Urbano</h2>
     <div class="galeria">
-        <img src="foto_urbano1.jpg" alt="Urbano">
-        <img src="foto_urbano2.jpg" alt="Urbano">
+        <img src="foto_urbano1.jpg" onclick="abrirFoto(this.src)">
+        <img src="foto_urbano2.jpg" onclick="abrirFoto(this.src)">
     </div>
 </section>
+
+<script>
+    function abrirFoto(url) {
+        document.getElementById('fotoGrande').src = url;
+        document.getElementById('visor').style.display = 'flex';
+    }
+</script>
 
 </body>
 </html>
