@@ -10,34 +10,23 @@
             font-family: 'Helvetica Neue', sans-serif; 
             color: white; 
             line-height: 1.6; 
-            background-color: #0f0f0f; /* Color de fondo base muy oscuro */
-        }
-        
-        /* EFECTO MARCA DE AGUA */
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            /* Imagen de fondo con opacidad muy baja (0.1) para efecto marca de agua */
-            background-image: url('fondo.jpg');
+            /* FONDO: Mezcla la imagen con un color oscuro para que todo sea legible */
+            background: linear-gradient(rgba(15, 15, 15, 0.85), rgba(15, 15, 15, 0.85)), url('fondo.jpg');
             background-size: cover;
             background-position: center;
-            opacity: 0.15; 
-            z-index: -1; /* Se mantiene detrás de todo */
-            pointer-events: none;
+            background-attachment: fixed;
+            background-color: #0f0f0f; 
         }
         
         header { padding: 80px 20px; text-align: center; }
         
+        /* BANNER: Con transparencia para que se complemente con el fondo */
         .banner-superior {
             max-width: 280px; 
             height: auto;
             margin-bottom: 25px;
-            opacity: 0.9;
-            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.5));
+            opacity: 0.9; /* Hace el logo ligeramente transparente */
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.5)); /* Le da profundidad */
         }
 
         h1 { font-weight: 200; letter-spacing: 8px; text-transform: uppercase; margin-bottom: 10px; }
@@ -65,18 +54,18 @@
             margin-bottom: 20px;
             border-radius: 4px;
             transition: all 0.5s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            filter: grayscale(20%); /* Efecto artístico sutil */
         }
 
         .galeria img:hover { 
             transform: scale(1.02); 
-            filter: brightness(1.1); 
+            filter: grayscale(0%) brightness(1.1); 
         }
 
         @media (max-width: 900px) { .galeria { column-count: 2; } }
         @media (max-width: 600px) { .galeria { column-count: 1; } }
     </style>
-</head>
+head>
 <body>
 
 <header>
