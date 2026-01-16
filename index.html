@@ -15,7 +15,7 @@
             background-color: #0d0d0d; 
             line-height: 1.6;
             overflow-x: hidden;
-            /* Evita la selección de contenido en todo el sitio */
+            /* SEGURIDAD: Evita la selección de texto en todo el sitio */
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
@@ -29,7 +29,6 @@
             -moz-user-drag: none;
             -o-user-drag: none;
             user-drag: none;
-            pointer-events: auto; /* Permite el clic para el visor, pero no el arrastre */
         }
 
         body::before {
@@ -308,6 +307,7 @@
 
 <section class="bio-container revelar">
     <img src="fotoperfil.jpg" alt="Mateo Gallego" class="foto-perfil">
+    
     <div class="bio-info">
         <h2 class="titulo-categoria">Sobre Mí</h2>
         <p class="bio-texto">
@@ -349,6 +349,31 @@
             <img src="retratosypersonas/foto5.jpg" onclick="abrirFoto(this.src)">
         </div>
     </div>
+    <div id="santiago" class="modelo-content">
+        <div class="sub-titulo">Modelo: Santiago Castro</div>
+        <div class="galeria">
+            <img src="retratosypersonas/santiago1.jpg" onclick="abrirFoto(this.src)">
+            <img src="retratosypersonas/santiago2.jpg" onclick="abrirFoto(this.src)">
+        </div>
+    </div>
+</section>
+
+<section class="seccion revelar">
+    <h2 class="titulo-categoria">Paisajes</h2>
+    <div class="sub-titulo">Ubicación: Los Nevados</div>
+    <div class="galeria">
+        <img src="foto_paisaje1.jpg" onclick="abrirFoto(this.src)">
+        <img src="foto_paisaje2.jpg" onclick="abrirFoto(this.src)">
+    </div>
+</section>
+
+<section class="seccion revelar">
+    <h2 class="titulo-categoria">Urbano</h2>
+    <div class="sub-titulo">Ciudad: Medellín</div>
+    <div class="galeria">
+        <img src="foto_urbano1.jpg" onclick="abrirFoto(this.src)">
+        <img src="foto_urbano2.jpg" onclick="abrirFoto(this.src)">
+    </div>
 </section>
 
 <footer>
@@ -361,9 +386,8 @@
 </footer>
 
 <script>
-    // --- NUEVAS FUNCIONES DE SEGURIDAD ---
+    // --- SEGURIDAD: Bloquea atajos de teclado (F12, Ctrl+U, Ctrl+S) ---
     document.addEventListener('keydown', function(e) {
-        // Bloquea F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U (Ver código fuente), Ctrl+S (Guardar)
         if (e.keyCode == 123 || 
             (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74)) || 
             (e.ctrlKey && (e.keyCode == 85 || e.keyCode == 83))) {
@@ -372,7 +396,6 @@
         }
     });
 
-    // --- TU LÓGICA ORIGINAL SIN CAMBIOS ---
     let imagenesVisibles = [];
     let indiceActual = 0;
     let touchStartX = 0;
