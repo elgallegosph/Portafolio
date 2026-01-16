@@ -74,60 +74,67 @@
             transform: translateY(0);
         }
 
-        /* --- NUEVO ESTILO DE BIOGRAFÍA EDITORIAL --- */
+        /* --- ESTILO PROFESIONAL DE BIOGRAFÍA --- */
         .bio-container { 
             max-width: 850px; 
             margin: 0 auto 120px auto; 
-            padding: 60px 40px; 
-            text-align: left; /* Cambio a alineación izquierda para look editorial */
+            padding: 80px 50px; 
+            text-align: left; 
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 24px;
-            backdrop-filter: blur(10px);
+            border-radius: 40px;
+            backdrop-filter: blur(15px);
             position: relative;
-            overflow: hidden;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.5);
         }
 
-        /* Decoración de fondo para la biografía */
-        .bio-container::after {
-            content: "BIO";
+        /* Título decorativo interno sutil */
+        .bio-container::before {
+            content: "EST. 2024";
             position: absolute;
-            top: -20px;
-            right: -10px;
-            font-family: 'Syne', sans-serif;
-            font-size: 10rem;
-            font-weight: 800;
-            color: rgba(255,255,255,0.03);
-            z-index: -1;
+            top: 40px;
+            right: 50px;
+            font-size: 0.6rem;
+            letter-spacing: 4px;
+            color: rgba(255,255,255,0.2);
         }
 
         .bio-texto { 
-            font-size: 1.15rem; 
+            font-size: 1.1rem; 
             color: #ccc; 
             font-weight: 300; 
-            line-height: 1.8;
-            letter-spacing: 0.3px;
+            line-height: 1.9;
+            text-align: justify;
         }
 
-        /* Estilo para la primera letra (Letra Capitular) */
+        /* Letra Capitular (Estilo Editorial) */
         .bio-texto::first-letter {
             font-family: 'Syne', sans-serif;
             float: left;
-            font-size: 4.5rem;
-            line-height: 0.8;
-            padding-top: 10px;
-            padding-right: 12px;
+            font-size: 5.5rem;
+            line-height: 0.7;
+            padding-top: 8px;
+            padding-right: 15px;
             font-weight: 800;
             color: #fff;
-            text-shadow: 0 0 20px rgba(255,255,255,0.3);
+            background: linear-gradient(180deg, #fff, #666);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .bio-texto strong {
             color: #fff;
             font-weight: 700;
-            border-bottom: 1px solid #444;
+            letter-spacing: 0.5px;
         }
-        /* ------------------------------------------ */
+
+        /* Separador decorativo al final del texto */
+        .bio-texto::after {
+            content: " ■";
+            color: rgba(255,255,255,0.3);
+            font-size: 0.8rem;
+        }
+        /* -------------------------------------- */
 
         .seccion { padding: 40px 20px; max-width: 1400px; margin: 0 auto; }
         
@@ -204,7 +211,7 @@
 
         @media (max-width: 1000px) { 
             .galeria { column-count: 1; } 
-            .bio-container { margin: 0 20px 100px 20px; padding: 40px 25px; }
+            .bio-container { padding: 40px 25px; margin: 0 20px 80px 20px; }
         }
     </style>
 </head>
