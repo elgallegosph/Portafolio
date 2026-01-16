@@ -13,7 +13,7 @@
             --bg-color: #0d0d0d;
             --accent-color: #ffffff;
             --text-gray: #888;
-            --transition-speed: 1.5s;
+            --transition-speed: 2s; /* Transición más elegante y lenta */
         }
  
         body { 
@@ -65,16 +65,16 @@
  
         .foto-perfil { flex: 0 0 300px; height: 400px; object-fit: cover; border-radius: 20px; filter: grayscale(1); }
  
-        /* SLIDESHOW PROFESIONAL */
+        /* SLIDESHOW PROFESIONAL - SIN RECUADROS NEGROS */
         .presentacion-container {
             max-width: 1100px; margin: 0 auto 100px auto;
             position: relative; overflow: hidden; border-radius: 24px;
-            height: 80vh; background: #000;
+            height: 85vh; background: var(--bg-color);
             box-shadow: 0 30px 60px rgba(0,0,0,0.5);
         }
         .slide {
             position: absolute; width: 100%; height: 100%; opacity: 0;
-            transition: opacity var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+            transition: opacity var(--transition-speed) ease-in-out;
             display: flex; justify-content: center; align-items: center;
             z-index: 1;
         }
@@ -82,17 +82,18 @@
         
         .slide img { 
             width: 100%; height: 100%; 
-            object-fit: contain; 
-            transform: scale(1.08);
-            transition: transform 8s linear;
+            object-fit: cover; /* Llena todo el espacio sin bordes negros */
+            transform: scale(1.15); /* Inicia con zoom */
+            transition: transform 7s ease-out; /* Zoom lento hacia afuera */
         }
         .slide.active img { transform: scale(1); }
         
         .slide-overlay {
-            position: absolute; bottom: 30px; width: 100%; text-align: center;
-            font-family: 'Syne'; font-size: 0.65rem; letter-spacing: 6px; 
-            color: rgba(255,255,255,0.3); z-index: 10;
+            position: absolute; bottom: 40px; width: 100%; text-align: center;
+            font-family: 'Syne'; font-size: 0.7rem; letter-spacing: 8px; 
+            color: rgba(255,255,255,0.6); z-index: 10;
             text-transform: uppercase; pointer-events: none;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
         }
 
         .seccion { padding: 40px 20px; max-width: 1400px; margin: 0 auto; }
@@ -126,7 +127,7 @@
         @media (max-width: 800px) { 
             .bio-container { flex-direction: column; padding: 40px 20px; }
             .foto-perfil { flex: 0 0 auto; width: 100%; max-width: 280px; height: 350px; }
-            .presentacion-container { height: 65vh; border-radius: 0; width: 100%; }
+            .presentacion-container { height: 70vh; border-radius: 0; width: 100%; }
         }
     </style>
 </head>
@@ -208,13 +209,10 @@
     let touchStartX = 0;
     let touchEndX = 0;
 
-    // --- CARGAR TODAS LAS FOTOS AL SLIDESHOW AUTOMÁTICAMENTE ---
     function cargarPresentacion() {
         const contenedorSlides = document.getElementById('slideshow');
-        // Captura TODAS las imágenes de las galerías (Retratos + Paisajes)
         const todasLasFotos = Array.from(document.querySelectorAll('.galeria img'));
         
-        // Mezclar aleatoriamente para que siempre sea distinto
         for (let i = todasLasFotos.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [todasLasFotos[i], todasLasFotos[j]] = [todasLasFotos[j], todasLasFotos[i]];
@@ -239,13 +237,11 @@
             slides[slideActual].classList.remove('active');
             slideActual = (slideActual + 1) % slides.length;
             slides[slideActual].classList.add('active');
-        }, 5000);
+        }, 5000); // Cambia cada 5 segundos
     }
 
-    // Ejecutar al cargar la página
     window.onload = cargarPresentacion;
 
-    // --- LOGICA DE NAVEGACIÓN ---
     function verModelo(id, btn) {
        document.querySelectorAll('.modelo-content').forEach(m => m.style.display = 'none');
        document.querySelectorAll('.btn-modelo').forEach(b => b.classList.remove('activo-btn'));
@@ -254,7 +250,6 @@
     }
  
     function abrirFoto(elemento) {
-        // Obtenemos las fotos de la galería actual para navegar entre ellas
         const contenedor = elemento.closest('.galeria');
         imagenesGaleria = Array.from(contenedor.querySelectorAll('img')).map(img => img.src);
         indiceActual = imagenesGaleria.indexOf(elemento.src);
@@ -269,7 +264,6 @@
         document.getElementById('fotoGrande').src = imagenesGaleria[indiceActual];
     }
 
-    // Control por teclado
     document.addEventListener('keydown', (e) => {
         if (document.getElementById('visor').style.display === 'flex') {
             if (e.key === "ArrowRight") cambiarFoto(1);
@@ -278,7 +272,6 @@
         }
     });
 
-    // Control táctil (deslizar)
     const visor = document.getElementById('visor');
     visor.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; });
     visor.addEventListener('touchend', e => { 
@@ -287,11 +280,9 @@
         if (touchEndX > touchStartX + 50) cambiarFoto(-1);
     });
 
-    // Seguridad: Bloqueo de inspección básico
     window.addEventListener('blur', () => document.body.classList.add('protegido'));
     window.addEventListener('focus', () => document.body.classList.remove('protegido'));
 
-    // Animación de aparición (Scroll)
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('activo'); });
     }, { threshold: 0.1 });
