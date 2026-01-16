@@ -65,7 +65,7 @@
  
         .foto-perfil { flex: 0 0 300px; height: 400px; object-fit: cover; border-radius: 20px; filter: grayscale(1); }
  
-        /* SLIDESHOW PROFESIONAL - FOTOS COMPLETAS */
+        /* SLIDESHOW PROFESIONAL */
         .presentacion-container {
             max-width: 1100px; margin: 0 auto 100px auto;
             position: relative; overflow: hidden; border-radius: 24px;
@@ -82,7 +82,7 @@
         
         .slide img { 
             width: 100%; height: 100%; 
-            object-fit: contain; /* Garantiza foto completa */
+            object-fit: contain; 
             transform: scale(1.08);
             transition: transform 8s linear;
         }
@@ -97,6 +97,7 @@
 
         .seccion { padding: 40px 20px; max-width: 1400px; margin: 0 auto; }
         .titulo-categoria { border-left: 4px solid #fff; padding-left: 20px; margin-bottom: 40px; text-transform: uppercase; letter-spacing: 5px; font-family: 'Syne'; }
+        
         .contenedor-botones { display: flex; gap: 15px; margin-bottom: 30px; flex-wrap: wrap; }
         .btn-modelo { background: transparent; border: 1px solid rgba(255,255,255,0.2); color: white; padding: 10px 25px; cursor: pointer; border-radius: 30px; font-family: 'Syne'; font-size: 0.7rem; transition: 0.3s; }
         .btn-modelo.activo-btn { background: white; color: black; font-weight: 700; border-color: white; }
@@ -105,7 +106,6 @@
         .galeria img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 8px; cursor: pointer; transition: 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); filter: grayscale(0.3); }
         .galeria img:hover { transform: scale(1.02); filter: grayscale(0); box-shadow: 0 15px 30px rgba(0,0,0,0.5); }
  
-        /* VISOR - FOTOS COMPLETAS */
         #visor {
             display: none; position: fixed; z-index: 2000; top: 0; left: 0;
             width: 100%; height: 100%; background: rgba(0,0,0,0.98);
@@ -115,6 +115,7 @@
         @keyframes zoomIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
  
         .wsp-flotante, .ig-flotante { position: fixed; right: 30px; width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; z-index: 100; transition: 0.3s; }
+        .wsp-flotante:hover, .ig-flotante:hover { transform: scale(1.1); }
         .wsp-flotante { bottom: 30px; background-color: #25d366; }
         .ig-flotante { bottom: 105px; background: linear-gradient(45deg, #f09433, #dc2743, #bc1888); }
         .wsp-flotante svg, .ig-flotante svg { width: 28px; height: 28px; fill: white; }
@@ -142,17 +143,13 @@
     <div class="bio-info">
         <h2 class="titulo-categoria">Sobre Mí</h2>
         <p class="bio-texto">
-           Soy <strong>Mateo Gallego</strong> fotógrafo colombiano con experiencia en fotografía editorial, de estudio y documental. Mi trabajo se centra en construir narrativas visuales que conecten estética y contenido,
-            explorando la luz, la composición y la emoción como herramientas principales.
-            <br><br>
-            A través de la fotografía editorial traduzco ideas en imágenes; en el estudio creo escenas controladas que potencian el concepto; y en el enfoque documental retrato realidades desde una mirada honesta y cercana.
-            Cada proyecto es una oportunidad para contar historias auténticas y generar una conexión real con quien observa.
+           <strong>Mateo Gallego</strong> es un fotógrafo colombiano con varios años de experiencia en fotografía de estudio, editorial y documental. Su trabajo se caracteriza por una mirada sensible enfocada en la transmisión de emociones.
         </p>
     </div>
 </section>
 
 <section class="presentacion-container revelar" id="slideshow">
-    <div class="slide-overlay">PORTAFOLIO VISUAL — MATEO GALLEGO</div>
+    <div class="slide-overlay">M.G. VISUALS — PRESENTACIÓN COMPLETA</div>
 </section>
  
 <section class="seccion revelar">
@@ -185,6 +182,8 @@
     <div class="galeria">
         <img src="foto_paisaje1.jpg" onclick="abrirFoto(this)">
         <img src="foto_paisaje2.jpg" onclick="abrirFoto(this)">
+        <img src="foto_paisaje3.jpg" onclick="abrirFoto(this)">
+        <img src="foto_paisaje4.jpg" onclick="abrirFoto(this)">
     </div>
 </section>
  
@@ -196,7 +195,10 @@
 <a href="https://api.whatsapp.com/send?phone=573218870891" class="wsp-flotante" target="_blank"><svg viewBox="0 0 448 512"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.1 0-65.6-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-5.5-2.8-23.2-8.5-44.2-27.1-16.4-14.6-27.4-32.7-30.6-38.2-3.2-5.6-.3-8.6 2.5-11.3 2.5-2.5 5.5-6.5 8.3-9.7 2.8-3.3 3.7-5.6 5.5-9.3 1.9-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 13.2 5.8 23.5 9.2 31.5 11.8 13.3 4.2 25.4 3.6 35 2.2 10.7-1.5 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg></a>
  
 <footer>
-    <div class="redes"><a href="https://instagram.com/_soy_mateo_" target="_blank">Instagram</a><a href="mailto:tuemail@ejemplo.com">Contacto</a></div>
+    <div class="redes">
+        <a href="https://instagram.com/_soy_mateo_" target="_blank">Instagram</a>
+        <a href="mailto:tuemail@ejemplo.com">Contacto</a>
+    </div>
     <p style="font-size: 0.6rem; color: #333; margin-top: 20px;">© 2024 M.G. VISUALS — PROTEGIDO</p>
 </footer>
  
@@ -206,12 +208,13 @@
     let touchStartX = 0;
     let touchEndX = 0;
 
-    // --- CARGA Y ALEATORIEDAD ---
+    // --- CARGAR TODAS LAS FOTOS AL SLIDESHOW AUTOMÁTICAMENTE ---
     function cargarPresentacion() {
         const contenedorSlides = document.getElementById('slideshow');
+        // Captura TODAS las imágenes de las galerías (Retratos + Paisajes)
         const todasLasFotos = Array.from(document.querySelectorAll('.galeria img'));
         
-        // Mezclar fotos aleatoriamente
+        // Mezclar aleatoriamente para que siempre sea distinto
         for (let i = todasLasFotos.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [todasLasFotos[i], todasLasFotos[j]] = [todasLasFotos[j], todasLasFotos[i]];
@@ -239,9 +242,10 @@
         }, 5000);
     }
 
+    // Ejecutar al cargar la página
     window.onload = cargarPresentacion;
 
-    // --- FUNCIONALIDAD ---
+    // --- LOGICA DE NAVEGACIÓN ---
     function verModelo(id, btn) {
        document.querySelectorAll('.modelo-content').forEach(m => m.style.display = 'none');
        document.querySelectorAll('.btn-modelo').forEach(b => b.classList.remove('activo-btn'));
@@ -250,6 +254,7 @@
     }
  
     function abrirFoto(elemento) {
+        // Obtenemos las fotos de la galería actual para navegar entre ellas
         const contenedor = elemento.closest('.galeria');
         imagenesGaleria = Array.from(contenedor.querySelectorAll('img')).map(img => img.src);
         indiceActual = imagenesGaleria.indexOf(elemento.src);
@@ -264,7 +269,7 @@
         document.getElementById('fotoGrande').src = imagenesGaleria[indiceActual];
     }
 
-    // Teclado y Gestos
+    // Control por teclado
     document.addEventListener('keydown', (e) => {
         if (document.getElementById('visor').style.display === 'flex') {
             if (e.key === "ArrowRight") cambiarFoto(1);
@@ -273,6 +278,7 @@
         }
     });
 
+    // Control táctil (deslizar)
     const visor = document.getElementById('visor');
     visor.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; });
     visor.addEventListener('touchend', e => { 
@@ -281,7 +287,11 @@
         if (touchEndX > touchStartX + 50) cambiarFoto(-1);
     });
 
-    // Scroll Reveal
+    // Seguridad: Bloqueo de inspección básico
+    window.addEventListener('blur', () => document.body.classList.add('protegido'));
+    window.addEventListener('focus', () => document.body.classList.remove('protegido'));
+
+    // Animación de aparición (Scroll)
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('activo'); });
     }, { threshold: 0.1 });
