@@ -62,7 +62,6 @@
 
         header p { color: #888; letter-spacing: 8px; text-transform: uppercase; font-size: 0.8rem; }
 
-        /* REVELADO AL HACER SCROLL */
         .revelar {
             opacity: 0;
             transform: translateY(30px);
@@ -74,7 +73,6 @@
             transform: translateY(0);
         }
 
-        /* --- ESTILO PROFESIONAL DE BIOGRAFÍA --- */
         .bio-container { 
             max-width: 850px; 
             margin: 0 auto 120px auto; 
@@ -132,7 +130,6 @@
             font-size: 0.8rem;
         }
 
-        /* --- ESTILOS DE LOS BOTONES DE MODELOS --- */
         .contenedor-botones {
             display: flex;
             gap: 15px;
@@ -165,7 +162,6 @@
             font-weight: 700;
         }
 
-        /* Control de visibilidad de los modelos */
         .modelo-content {
             display: none;
             animation: fadeIn 0.5s ease forwards;
@@ -176,7 +172,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- RESTO DE LA GALERÍA --- */
         .seccion { padding: 40px 20px; max-width: 1400px; margin: 0 auto; }
         
         .titulo-categoria { 
@@ -267,7 +262,7 @@
 <section class="bio-container revelar">
     <h2 class="titulo-categoria">Sobre Mí</h2>
     <p class="bio-texto">
-        <strong>Mateo Gallego</strong>. es un fotógrafo colombiano... (tu descripción se mantiene igual)
+        <strong>Mateo Gallego</strong>. es un fotógrafo colombiano con varios años de experiencia... (tu descripción)
     </p>
 </section>
 
@@ -281,14 +276,11 @@
 
 <section class="seccion revelar">
     <h2 class="titulo-categoria">Retratos</h2>
-
     <div class="contenedor-botones">
         <button class="btn-modelo activo-btn" onclick="verModelo('larry', this)">Larry Arias</button>
         <button class="btn-modelo" onclick="verModelo('santiago', this)">Santiago Castro</button>
     </div>
-
     <div id="larry" class="modelo-content" style="display: block;">
-        <div class="sub-titulo">Modelo: Larry Arias</div>
         <div class="galeria">
             <img src="retratosypersonas/foto1.jpg" onclick="abrirFoto(this.src)">
             <img src="retratosypersonas/foto2.jpg" onclick="abrirFoto(this.src)">
@@ -297,7 +289,6 @@
             <img src="retratosypersonas/foto5.jpg" onclick="abrirFoto(this.src)">
         </div>
     </div>
-
     <div id="santiago" class="modelo-content">
         <div class="sub-titulo">Modelo: Santiago Castro</div>
         <div class="galeria">
@@ -335,25 +326,57 @@
 </footer>
 
 <script>
-    // FUNCIÓN PARA CAMBIAR DE MODELO
+    // Variables para control de navegación
+    let imagenesVisibles = [];
+    let indiceActual = 0;
+
     function verModelo(id, btn) {
-        // Ocultar todos los modelos
         const modelos = document.querySelectorAll('.modelo-content');
         modelos.forEach(m => m.style.display = 'none');
-        
-        // Quitar clase activa de botones
         const botones = document.querySelectorAll('.btn-modelo');
         botones.forEach(b => b.classList.remove('activo-btn'));
-
-        // Mostrar el seleccionado y activar botón
         document.getElementById(id).style.display = 'block';
         btn.classList.add('activo-btn');
     }
 
     function abrirFoto(url) {
-        document.getElementById('fotoGrande').src = url;
-        document.getElementById('visor').style.display = 'flex';
+        const visor = document.getElementById('visor');
+        const fotoGrande = document.getElementById('fotoGrande');
+        
+        // Actualizar lista de imágenes disponibles (solo las que se pueden ver actualmente)
+        // Esto evita saltar a fotos de un modelo que está oculto
+        imagenesVisibles = Array.from(document.querySelectorAll('.seccion'))
+            .filter(seccion => getComputedStyle(seccion).display !== 'none')
+            .flatMap(seccion => Array.from(seccion.querySelectorAll('.galeria img')))
+            .filter(img => {
+                let parent = img.closest('.modelo-content');
+                return !parent || getComputedStyle(parent).display !== 'none';
+            });
+
+        indiceActual = imagenesVisibles.findIndex(img => img.src === url);
+        
+        fotoGrande.src = url;
+        visor.style.display = 'flex';
     }
+
+    // Navegación por teclado
+    document.addEventListener('keydown', (e) => {
+        const visor = document.getElementById('visor');
+        if (visor.style.display !== 'flex') return;
+
+        if (e.key === 'ArrowRight') {
+            // Siguiente foto
+            indiceActual = (indiceActual + 1) % imagenesVisibles.length;
+            document.getElementById('fotoGrande').src = imagenesVisibles[indiceActual].src;
+        } else if (e.key === 'ArrowLeft') {
+            // Foto anterior
+            indiceActual = (indiceActual - 1 + imagenesVisibles.length) % imagenesVisibles.length;
+            document.getElementById('fotoGrande').src = imagenesVisibles[indiceActual].src;
+        } else if (e.key === 'Escape') {
+            // Cerrar visor
+            visor.style.display = 'none';
+        }
+    });
 
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
