@@ -85,18 +85,38 @@
             font-weight: 700;
             border-left: 4px solid #fff; 
             padding-left: 20px; 
-            margin-bottom: 50px; 
+            margin-bottom: 40px; 
             text-transform: uppercase; 
             letter-spacing: 5px;
         }
 
+        /* ESTILO PARA NOMBRES DE MODELOS/LUGARES */
+        .sub-titulo {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.85rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin: 40px 0 20px 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .sub-titulo::after {
+            content: "";
+            height: 1px;
+            background: #222;
+            flex-grow: 1;
+            margin-left: 15px;
+        }
+
         /* GALERÍA SIN FILTROS DE COLOR */
-        .galeria { column-count: 2; column-gap: 30px; }
+        .galeria { column-count: 2; column-gap: 30px; margin-bottom: 60px; }
         .galeria img {
             width: 100%; display: block; margin-bottom: 30px; border-radius: 4px;
             cursor: pointer; 
             transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s ease;
-            filter: brightness(1); /* Asegura color original */
+            filter: brightness(1); 
             box-shadow: 0 10px 25px rgba(0,0,0,0.4);
         }
         
@@ -163,6 +183,8 @@
 
 <section class="seccion revelar">
     <h2 class="titulo-categoria">Paisajes</h2>
+    
+    <div class="sub-titulo">Ubicación: Los Nevados</div>
     <div class="galeria">
         <img src="foto_paisaje1.jpg" onclick="abrirFoto(this.src)">
         <img src="foto_paisaje2.jpg" onclick="abrirFoto(this.src)">
@@ -171,9 +193,15 @@
 
 <section class="seccion revelar">
     <h2 class="titulo-categoria">Retratos</h2>
+
+    <div class="sub-titulo">Modelo: Valentina Ríos</div>
     <div class="galeria">
         <img src="retratosypersonas/foto1.jpg" onclick="abrirFoto(this.src)">
         <img src="retratosypersonas/foto2.jpg" onclick="abrirFoto(this.src)">
+    </div>
+
+    <div class="sub-titulo">Modelo: Santiago Castro</div>
+    <div class="galeria">
         <img src="retratosypersonas/foto3.jpg" onclick="abrirFoto(this.src)">
         <img src="retratosypersonas/foto4.jpg" onclick="abrirFoto(this.src)">
         <img src="retratosypersonas/foto5.jpg" onclick="abrirFoto(this.src)">
@@ -182,6 +210,8 @@
 
 <section class="seccion revelar">
     <h2 class="titulo-categoria">Urbano</h2>
+    
+    <div class="sub-titulo">Ciudad: Medellín</div>
     <div class="galeria">
         <img src="foto_urbano1.jpg" onclick="abrirFoto(this.src)">
         <img src="foto_urbano2.jpg" onclick="abrirFoto(this.src)">
