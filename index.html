@@ -17,7 +17,6 @@
             overflow-x: hidden;
         }
         
-        /* FONDO DINÁMICO */
         body::before {
             content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-image: url('fondo.png'); background-size: cover; background-position: center;
@@ -204,23 +203,22 @@
             margin-left: 15px;
         }
 
-        /* NUEVO ESTILO DE GALERÍA: Más compacto y ordenado */
         .galeria { 
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Tamaño de miniatura más pequeño */
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 20px; 
             margin-bottom: 60px; 
         }
 
         .galeria img {
             width: 100%; 
-            aspect-ratio: 4 / 5; /* Mantiene un estilo editorial vertical constante */
-            object-fit: cover; /* Asegura que la foto llene el espacio sin deformarse */
+            aspect-ratio: 4 / 5;
+            object-fit: cover;
             display: block; 
             border-radius: 8px;
             cursor: pointer; 
             transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
-            filter: grayscale(0.3) brightness(0.9); /* Estilo visual más artístico */
+            filter: grayscale(0.3) brightness(0.9);
             box-shadow: 0 10px 20px rgba(0,0,0,0.3);
         }
         
@@ -236,11 +234,12 @@
             width: 100%; height: 100%; background: rgba(0,0,0,0.98);
             justify-content: center; align-items: center; cursor: zoom-out;
             backdrop-filter: blur(15px);
+            touch-action: none; /* Importante para evitar scroll mientras se desliza la foto */
         }
         #visor img { 
             max-width: 95%; 
             max-height: 95%; 
-            object-fit: contain; /* Aquí la foto se ve completa sin recortes */
+            object-fit: contain;
             border-radius: 2px; 
             box-shadow: 0 0 50px rgba(0,0,0,1);
         }
@@ -281,13 +280,13 @@
 <section class="bio-container revelar">
     <h2 class="titulo-categoria">Sobre Mí</h2>
     <p class="bio-texto">
-        <strong>Mateo Gallego</strong>. es un fotógrafo colombiano con varios años de experiencia en fotografía de estudio,
+        <strong>Mateo Gallego</strong>. >. es un fotógrafo colombiano con varios años de experiencia en fotografía de estudio,
         editorial y documental. Su trabajo se caracteriza por una mirada sensible y consciente, enfocada en la transmisión de emociones, sensaciones y narrativas visuales que conectan con el espectador.
         En la fotografía de estudio, desarrolla retratos que priorizan la expresión, el gesto y la identidad de las personas, utilizando la luz y el encuadre como herramientas narrativas.
         En el ámbito editorial, su trabajo se orienta a construir imágenes sólidas y estéticamente cuidadas, pensadas para comunicar ideas, conceptos y mensajes visuales con claridad y fuerza.
         <br><br>
         Desde la fotografía documental, Mateo ha trabajado de manera constante en la documentación de procesos culturales y artísticos, especialmente en bandas sinfónicas, donde explora la disciplina,
-        el esfuerzo colectivo y el valor del proceso formativo. Su enfoque busca ir más allá del registro, construyendo imágenes que dialogan con la memoria y la identidad.
+        el esfuerzo colectivo y el valor del proceso formativo. Su enfoque busca ir más allá del registro, construyendo imágenes que dialogan con la memoria y la identidad
     </p>
 </section>
 
@@ -354,6 +353,10 @@
     let imagenesVisibles = [];
     let indiceActual = 0;
 
+    // --- NUEVAS VARIABLES PARA TÁCTIL ---
+    let touchStartX = 0;
+    let touchEndX = 0;
+
     function verModelo(id, btn) {
         const modelos = document.querySelectorAll('.modelo-content');
         modelos.forEach(m => m.style.display = 'none');
@@ -380,21 +383,45 @@
         visor.style.display = 'flex';
     }
 
+    // Funciones de navegación
+    function pasarSiguiente() {
+        indiceActual = (indiceActual + 1) % imagenesVisibles.length;
+        document.getElementById('fotoGrande').src = imagenesVisibles[indiceActual].src;
+    }
+
+    function pasarAnterior() {
+        indiceActual = (indiceActual - 1 + imagenesVisibles.length) % imagenesVisibles.length;
+        document.getElementById('fotoGrande').src = imagenesVisibles[indiceActual].src;
+    }
+
+    // Navegación por teclado
     document.addEventListener('keydown', (e) => {
         const visor = document.getElementById('visor');
         if (visor.style.display !== 'flex') return;
-
-        if (e.key === 'ArrowRight') {
-            indiceActual = (indiceActual + 1) % imagenesVisibles.length;
-            document.getElementById('fotoGrande').src = imagenesVisibles[indiceActual].src;
-        } else if (e.key === 'ArrowLeft') {
-            indiceActual = (indiceActual - 1 + imagenesVisibles.length) % imagenesVisibles.length;
-            document.getElementById('fotoGrande').src = imagenesVisibles[indiceActual].src;
-        } else if (e.key === 'Escape') {
-            visor.style.display = 'none';
-        }
+        if (e.key === 'ArrowRight') pasarSiguiente();
+        else if (e.key === 'ArrowLeft') pasarAnterior();
+        else if (e.key === 'Escape') visor.style.display = 'none';
     });
 
+    // --- NUEVO: DETECCIÓN DE SWIPE (DESLIZAR) ---
+    const visorElement = document.getElementById('visor');
+    
+    visorElement.addEventListener('touchstart', e => {
+        touchStartX = e.changedTouches[0].screenX;
+    }, false);
+
+    visorElement.addEventListener('touchend', e => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleGesture();
+    }, false);
+
+    function handleGesture() {
+        // Si el deslizamiento es mayor a 50px de distancia
+        if (touchEndX < touchStartX - 50) pasarSiguiente();
+        if (touchEndX > touchStartX + 50) pasarAnterior();
+    }
+
+    // Intersection Observer para animaciones
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
