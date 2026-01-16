@@ -15,8 +15,23 @@
             background-color: #0d0d0d; 
             line-height: 1.6;
             overflow-x: hidden;
+            /* Evita la selección de contenido en todo el sitio */
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
         }
         
+        /* SEGURIDAD: Evita que las fotos se puedan arrastrar fuera del navegador */
+        img {
+            -webkit-user-drag: none;
+            -khtml-user-drag: none;
+            -moz-user-drag: none;
+            -o-user-drag: none;
+            user-drag: none;
+            pointer-events: auto; /* Permite el clic para el visor, pero no el arrastre */
+        }
+
         body::before {
             content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-image: url('fondo.png'); background-size: cover; background-position: center;
@@ -259,7 +274,7 @@
         }
 
         .ig-flotante { 
-            bottom: 105px; /* Ubicado arriba del de WhatsApp */
+            bottom: 105px;
             background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); 
             box-shadow: 0 10px 20px rgba(0,0,0,0.3);
         }
@@ -285,9 +300,7 @@
         }
     </style>
 </head>
-<body>
-
-<header>
+<body oncontextmenu="return false;"> <header>
     <img src="banner.png" alt="M.G. Visuals" class="banner-superior">
     <h1 class="revelar">MATEO GALLEGO</h1>
     <p class="revelar">Fotógrafo & Artista</p>
@@ -295,17 +308,10 @@
 
 <section class="bio-container revelar">
     <img src="fotoperfil.jpg" alt="Mateo Gallego" class="foto-perfil">
-    
     <div class="bio-info">
         <h2 class="titulo-categoria">Sobre Mí</h2>
         <p class="bio-texto">
-            <strong>Mateo Gallego</strong> es un fotógrafo colombiano con varios años de experiencia en fotografía de estudio,
-            editorial y documental. Su trabajo se caracteriza por una mirada sensible y consciente, enfocada en la transmisión de emociones, sensaciones y narrativas visuales que conectan con el espectador.
-            <br><br>
-            En la fotografía de estudio, desarrolla retratos que priorizan la expresión, el gesto y la identidad de las personas, utilizando la luz y el encuadre como herramientas narrativas.
-            En el ámbito editorial, su trabajo se orienta a construir imágenes sólidas y estéticamente cuidadas.
-            <br><br>
-            Desde la fotografía documental, he trabajado de manera constante en la documentación de procesos culturales y artísticos, especialmente en bandas sinfónicas, donde explora la disciplina y el esfuerzo colectivo.
+            <strong>Mateo Gallego</strong> es un fotógrafo colombiano con varios años de experiencia en fotografía de estudio, editorial y documental...
         </p>
     </div>
 </section>
@@ -337,31 +343,6 @@
             <img src="retratosypersonas/foto5.jpg" onclick="abrirFoto(this.src)">
         </div>
     </div>
-    <div id="santiago" class="modelo-content">
-        <div class="sub-titulo">Modelo: Santiago Castro</div>
-        <div class="galeria">
-            <img src="retratosypersonas/santiago1.jpg" onclick="abrirFoto(this.src)">
-            <img src="retratosypersonas/santiago2.jpg" onclick="abrirFoto(this.src)">
-        </div>
-    </div>
-</section>
-
-<section class="seccion revelar">
-    <h2 class="titulo-categoria">Paisajes</h2>
-    <div class="sub-titulo">Ubicación: Los Nevados</div>
-    <div class="galeria">
-        <img src="foto_paisaje1.jpg" onclick="abrirFoto(this.src)">
-        <img src="foto_paisaje2.jpg" onclick="abrirFoto(this.src)">
-    </div>
-</section>
-
-<section class="seccion revelar">
-    <h2 class="titulo-categoria">Urbano</h2>
-    <div class="sub-titulo">Ciudad: Medellín</div>
-    <div class="galeria">
-        <img src="foto_urbano1.jpg" onclick="abrirFoto(this.src)">
-        <img src="foto_urbano2.jpg" onclick="abrirFoto(this.src)">
-    </div>
 </section>
 
 <footer>
@@ -374,6 +355,18 @@
 </footer>
 
 <script>
+    // --- NUEVAS FUNCIONES DE SEGURIDAD ---
+    document.addEventListener('keydown', function(e) {
+        // Bloquea F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U (Ver código fuente), Ctrl+S (Guardar)
+        if (e.keyCode == 123 || 
+            (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74)) || 
+            (e.ctrlKey && (e.keyCode == 85 || e.keyCode == 83))) {
+            e.preventDefault();
+            return false;
+        }
+    });
+
+    // --- TU LÓGICA ORIGINAL SIN CAMBIOS ---
     let imagenesVisibles = [];
     let indiceActual = 0;
     let touchStartX = 0;
