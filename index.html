@@ -29,7 +29,7 @@
         body.protegido { filter: blur(20px) grayscale(1); }
         img { -webkit-user-drag: none; user-drag: none; pointer-events: auto; }
 
-        /* NAVEGACIÓN */
+        /* NAVEGACIÓN PRINCIPAL */
         nav {
             position: fixed; top: 0; left: 0; width: 100%; padding: 25px 0;
             display: flex; justify-content: center; gap: 40px;
@@ -46,7 +46,7 @@
 
         nav a:hover { opacity: 1; color: var(--accent-color); }
 
-        /* FONDO */
+        /* FONDO ANIMADO */
         body::before {
             content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-image: url('fondo.png'); background-size: cover; background-position: center;
@@ -78,32 +78,37 @@
         .revelar.activo { opacity: 1; transform: translateY(0); }
         .separador { width: 50px; height: 1px; background: rgba(255,255,255,0.2); margin: 0 auto 80px auto; }
 
-        /* LISTA DESPLEGABLE */
-        .filtro-galeria {
-            text-align: center; margin-bottom: 50px;
+        /* SECCIÓN GALERÍA Y MENÚ DESPLEGABLE */
+        #galeria { padding: var(--section-padding); background: rgba(255,255,255,0.01); text-align: center; }
+        
+        .contenedor-filtro {
+            margin: 40px auto;
+            max-width: 320px;
         }
+
         .select-personalizado {
-            background: rgba(255,255,255,0.05); color: white; border: 1px solid rgba(255,255,255,0.2);
-            padding: 12px 25px; border-radius: 30px; font-family: 'Syne'; font-size: 0.8rem;
-            letter-spacing: 2px; text-transform: uppercase; cursor: pointer; outline: none;
-            transition: 0.3s; width: 250px;
+            width: 100%;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.03);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-family: 'Syne';
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            outline: none;
+            transition: 0.3s;
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='white' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: calc(100% - 15px) center;
         }
-        .select-personalizado:hover { border-color: white; background: rgba(255,255,255,0.1); }
-        .select-personalizado option { background: #111; color: white; }
 
-        /* SECCIÓN: SOBRE MÍ */
-        #sobre-mi { padding: var(--section-padding); }
-        .bio-container { 
-            max-width: 950px; margin: 0 auto; padding: 60px; 
-            background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 40px; backdrop-filter: blur(15px);
-            display: flex; gap: 50px; align-items: center;
-        }
-        .foto-perfil { flex: 0 0 300px; height: 400px; object-fit: cover; border-radius: 20px; filter: grayscale(1); }
-        .bio-info h2 { font-family: 'Syne'; letter-spacing: 5px; text-transform: uppercase; margin-top: 0; }
+        .select-personalizado:hover { border-color: white; background: rgba(255, 255, 255, 0.08); }
+        .select-personalizado option { background: #0d0d0d; color: white; }
 
-        /* SECCIÓN: GALERÍA */
-        #galeria { padding: var(--section-padding); background: rgba(255,255,255,0.01); }
         .presentacion-container {
             max-width: 1100px; margin: 0 auto 100px auto;
             position: relative; overflow: hidden; height: 70vh; 
@@ -117,7 +122,7 @@
         .slide.active { opacity: 1; transform: scale(1); }
         .slide img { max-width: 90%; max-height: 90%; object-fit: contain; }
 
-        .seccion-fotos { max-width: 1400px; margin: 0 auto 100px auto; scroll-margin-top: 100px; }
+        .seccion-fotos { max-width: 1400px; margin: 0 auto 100px auto; text-align: left; scroll-margin-top: 100px; }
         .titulo-categoria { border-left: 4px solid #fff; padding-left: 20px; margin-bottom: 40px; text-transform: uppercase; letter-spacing: 5px; font-family: 'Syne'; }
         
         .contenedor-botones { display: flex; gap: 15px; margin-bottom: 30px; flex-wrap: wrap; }
@@ -128,6 +133,17 @@
         .galeria-grid img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 8px; cursor: pointer; transition: 0.5s; filter: grayscale(0.5); }
         .galeria-grid img:hover { transform: scale(1.03); filter: grayscale(0); }
 
+        /* SOBRE MÍ */
+        #sobre-mi { padding: var(--section-padding); }
+        .bio-container { 
+            max-width: 950px; margin: 0 auto; padding: 60px; 
+            background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 40px; backdrop-filter: blur(15px);
+            display: flex; gap: 50px; align-items: center;
+        }
+        .foto-perfil { flex: 0 0 300px; height: 400px; object-fit: cover; border-radius: 20px; filter: grayscale(1); }
+        .bio-info h2 { font-family: 'Syne'; letter-spacing: 5px; text-transform: uppercase; margin-top: 0; }
+
         /* VISOR */
         #visor {
             display: none; position: fixed; z-index: 2000; top: 0; left: 0;
@@ -137,7 +153,7 @@
         #visor img { max-width: 90%; max-height: 85%; object-fit: contain; }
         #contador-visor { position: absolute; bottom: 40px; font-family: 'Syne'; letter-spacing: 5px; font-size: 0.8rem; }
 
-        /* SECCIÓN: CONTACTO */
+        /* CONTACTO */
         #contacto { padding: 120px 20px; text-align: center; background: #050505; }
         .redes { margin-bottom: 40px; }
         .redes a { color: white; text-decoration: none; margin: 0 20px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 4px; opacity: 0.5; transition: 0.3s; }
@@ -185,25 +201,23 @@
 
 <section id="galeria">
     <div class="separador revelar"></div>
-    <h2 style="text-align: center; font-family: 'Syne'; letter-spacing: 10px; margin-bottom: 30px;" class="revelar">PORTAFOLIO</h2>
+    <h2 style="font-family: 'Syne'; letter-spacing: 10px; margin-bottom: 20px;" class="revelar">PORTAFOLIO</h2>
 
-    <div class="filtro-galeria revelar">
-        <select class="select-personalizado" onchange="navegarACategoria(this.value)">
-            <option value="" disabled selected>Explorar por...</option>
+    <div class="contenedor-filtro revelar">
+        <select class="select-personalizado" onchange="navegarGaleria(this.value)">
+            <option value="" disabled selected>Explorar por categoría</option>
             <optgroup label="Retratos">
-                <option value="larry">Retrato: Larry Arias</option>
-                <option value="santiago">Retrato: Santiago Castro</option>
+                <option value="larry">Larry Arias</option>
+                <option value="santiago">Santiago Castro</option>
             </optgroup>
-            <optgroup label="Categorías">
-                <option value="cat-street">Street Photography</option>
-                <option value="cat-prod">Fotografía de Producto</option>
-            </optgroup>
+            <option value="street">Street Photography</option>
+            <option value="producto">Producto</option>
         </select>
     </div>
 
     <div class="presentacion-container revelar" id="slideshow"></div>
 
-    <div class="seccion-fotos revelar" id="cat-retratos">
+    <div class="seccion-fotos revelar" id="sec-retratos">
         <h2 class="titulo-categoria">Retratos</h2>
         <div class="contenedor-botones">
             <button class="btn-modelo activo-btn" onclick="verModelo('larry', this)">Larry Arias</button>
@@ -228,7 +242,7 @@
         </div>
     </div>
 
-    <div class="seccion-fotos revelar" id="cat-street">
+    <div class="seccion-fotos revelar" id="sec-street">
         <h2 class="titulo-categoria">Street Photography</h2>
         <div class="galeria-grid" id="gal-street">
             <img src="street/foto1.jpg" onclick="abrirVisor(this, 'gal-street')">
@@ -238,7 +252,7 @@
         </div>
     </div>
 
-    <div class="seccion-fotos revelar" id="cat-prod">
+    <div class="seccion-fotos revelar" id="sec-producto">
         <h2 class="titulo-categoria">Producto</h2>
         <div class="galeria-grid" id="gal-prod">
             <img src="producto/foto1.jpg" onclick="abrirVisor(this, 'gal-prod')">
@@ -279,18 +293,16 @@
     let touchStartX = 0;
     let touchEndX = 0;
 
-    // Función nueva para el menú desplegable
-    function navegarACategoria(valor) {
+    // LÓGICA DEL MENÚ DESPLEGABLE
+    function navegarGaleria(valor) {
         if (!valor) return;
         
-        // Si es un modelo de Retratos
         if (valor === 'larry' || valor === 'santiago') {
             const btn = document.querySelector(`button[onclick*="${valor}"]`);
             verModelo(valor, btn);
-            document.getElementById('cat-retratos').scrollIntoView();
+            document.getElementById('sec-retratos').scrollIntoView();
         } else {
-            // Si es una categoría general (Street o Producto)
-            document.getElementById(valor).scrollIntoView();
+            document.getElementById('sec-' + valor).scrollIntoView();
         }
     }
 
@@ -366,7 +378,7 @@
         document.querySelectorAll('.modelo-content').forEach(m => m.style.display = 'none');
         document.querySelectorAll('.btn-modelo').forEach(b => b.classList.remove('activo-btn'));
         document.getElementById(id).style.display = 'block';
-        if (btn) btn.classList.add('activo-btn');
+        btn.classList.add('activo-btn');
     }
 
     window.onload = cargarPresentacion;
