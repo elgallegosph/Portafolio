@@ -29,24 +29,43 @@
         body.protegido { filter: blur(20px) grayscale(1); }
         img { -webkit-user-drag: none; user-drag: none; pointer-events: auto; }
 
-        /* NAVEGACIÓN PRINCIPAL */
+        /* NAVEGACIÓN CON MENÚ DESPLEGABLE */
         nav {
             position: fixed; top: 0; left: 0; width: 100%; padding: 25px 0;
             display: flex; justify-content: center; gap: 40px;
-            background: rgba(13, 13, 13, 0.9);
+            background: rgba(13, 13, 13, 0.95);
             backdrop-filter: blur(15px); z-index: 1000;
             border-bottom: 1px solid rgba(255,255,255,0.05);
         }
 
-        nav a {
+        .nav-item { position: relative; display: inline-block; }
+
+        nav a, .dropbtn {
             color: white; text-decoration: none; font-family: 'Syne'; font-size: 0.7rem;
             text-transform: uppercase; letter-spacing: 3px; transition: 0.3s;
-            opacity: 0.6;
+            opacity: 0.6; background: none; border: none; cursor: pointer; padding: 0;
         }
 
-        nav a:hover { opacity: 1; color: var(--accent-color); }
+        nav a:hover, .nav-item:hover .dropbtn { opacity: 1; color: var(--accent-color); }
 
-        /* FONDO ANIMADO */
+        /* Estilo del Desplegable en el Nav */
+        .dropdown-content {
+            display: none; position: absolute; top: 100%; left: 50%;
+            transform: translateX(-50%); background-color: #1a1a1a;
+            min-width: 200px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);
+            z-index: 1100; margin-top: 15px; border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .dropdown-content a {
+            color: white; padding: 12px 16px; text-decoration: none;
+            display: block; font-size: 0.6rem; letter-spacing: 2px;
+            opacity: 0.7; transition: 0.2s; text-align: center;
+        }
+
+        .dropdown-content a:hover { background-color: #222; opacity: 1; }
+        .nav-item:hover .dropdown-content { display: block; }
+
+        /* FONDO */
         body::before {
             content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-image: url('fondo.png'); background-size: cover; background-position: center;
@@ -73,42 +92,22 @@
 
         header p { color: var(--text-gray); letter-spacing: 8px; text-transform: uppercase; font-size: 0.8rem; margin-top: 10px; }
 
-        /* SECCIONES COMUNES */
+        /* SECCIONES */
         .revelar { opacity: 0; transform: translateY(30px); transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1); }
         .revelar.activo { opacity: 1; transform: translateY(0); }
         .separador { width: 50px; height: 1px; background: rgba(255,255,255,0.2); margin: 0 auto 80px auto; }
 
-        /* SECCIÓN GALERÍA Y MENÚ DESPLEGABLE */
-        #galeria { padding: var(--section-padding); background: rgba(255,255,255,0.01); text-align: center; }
-        
-        .contenedor-filtro {
-            margin: 40px auto;
-            max-width: 320px;
+        #sobre-mi { padding: var(--section-padding); }
+        .bio-container { 
+            max-width: 950px; margin: 0 auto; padding: 60px; 
+            background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 40px; backdrop-filter: blur(15px);
+            display: flex; gap: 50px; align-items: center;
         }
+        .foto-perfil { flex: 0 0 300px; height: 400px; object-fit: cover; border-radius: 20px; filter: grayscale(1); }
 
-        .select-personalizado {
-            width: 100%;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.03);
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            font-family: 'Syne';
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 0.7rem;
-            cursor: pointer;
-            outline: none;
-            transition: 0.3s;
-            appearance: none;
-            -webkit-appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='white' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: calc(100% - 15px) center;
-        }
-
-        .select-personalizado:hover { border-color: white; background: rgba(255, 255, 255, 0.08); }
-        .select-personalizado option { background: #0d0d0d; color: white; }
-
+        /* GALERÍA */
+        #galeria { padding: var(--section-padding); background: rgba(255,255,255,0.01); }
         .presentacion-container {
             max-width: 1100px; margin: 0 auto 100px auto;
             position: relative; overflow: hidden; height: 70vh; 
@@ -122,7 +121,7 @@
         .slide.active { opacity: 1; transform: scale(1); }
         .slide img { max-width: 90%; max-height: 90%; object-fit: contain; }
 
-        .seccion-fotos { max-width: 1400px; margin: 0 auto 100px auto; text-align: left; scroll-margin-top: 100px; }
+        .seccion-fotos { max-width: 1400px; margin: 0 auto 100px auto; scroll-margin-top: 120px; }
         .titulo-categoria { border-left: 4px solid #fff; padding-left: 20px; margin-bottom: 40px; text-transform: uppercase; letter-spacing: 5px; font-family: 'Syne'; }
         
         .contenedor-botones { display: flex; gap: 15px; margin-bottom: 30px; flex-wrap: wrap; }
@@ -132,17 +131,6 @@
         .galeria-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
         .galeria-grid img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 8px; cursor: pointer; transition: 0.5s; filter: grayscale(0.5); }
         .galeria-grid img:hover { transform: scale(1.03); filter: grayscale(0); }
-
-        /* SOBRE MÍ */
-        #sobre-mi { padding: var(--section-padding); }
-        .bio-container { 
-            max-width: 950px; margin: 0 auto; padding: 60px; 
-            background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 40px; backdrop-filter: blur(15px);
-            display: flex; gap: 50px; align-items: center;
-        }
-        .foto-perfil { flex: 0 0 300px; height: 400px; object-fit: cover; border-radius: 20px; filter: grayscale(1); }
-        .bio-info h2 { font-family: 'Syne'; letter-spacing: 5px; text-transform: uppercase; margin-top: 0; }
 
         /* VISOR */
         #visor {
@@ -157,8 +145,7 @@
         #contacto { padding: 120px 20px; text-align: center; background: #050505; }
         .redes { margin-bottom: 40px; }
         .redes a { color: white; text-decoration: none; margin: 0 20px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 4px; opacity: 0.5; transition: 0.3s; }
-        .redes a:hover { opacity: 1; }
-
+        
         /* BOTONES FLOTANTES */
         .wsp-flotante, .ig-flotante { position: fixed; right: 30px; width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; z-index: 100; transition: 0.3s; }
         .wsp-flotante { bottom: 30px; background-color: #25d366; }
@@ -176,7 +163,17 @@
 
 <nav>
     <a href="#sobre-mi">Sobre Mí</a>
-    <a href="#galeria">Galería</a>
+    
+    <div class="nav-item">
+        <button class="dropbtn" onclick="location.href='#galeria'">Galería</button>
+        <div class="dropdown-content">
+            <a href="javascript:void(0)" onclick="irA('larry')">Retrato: Larry</a>
+            <a href="javascript:void(0)" onclick="irA('santiago')">Retrato: Santiago</a>
+            <a href="javascript:void(0)" onclick="irA('gal-street')">Street Photography</a>
+            <a href="javascript:void(0)" onclick="irA('gal-prod')">Producto</a>
+        </div>
+    </div>
+
     <a href="#contacto">Contacto</a>
 </nav>
 
@@ -193,14 +190,7 @@
         <div class="bio-info">
             <h2>Sobre Mí</h2>
             <p class="bio-texto">
-                Soy <strong>Mateo Gallego</strong>, un fotógrafo colombiano con experiencia en fotografía editorial, de estudio y documental, enfocado en la creación de narrativas visuales que combinan estética, concepto y emoción.
-            Mi trabajo parte de la observación y el análisis de cada contexto, utilizando la luz y la composición como herramientas para comunicar ideas y sensaciones.
-            <br><br>
-            En la fotografía editorial desarrollo imágenes que dialogan con el contenido y el mensaje de cada proyecto, buscando síntesis visual y coherencia narrativa.
-            En el estudio, trabajo desde la planificación y el control del espacio para construir escenas que refuercen la identidad del sujeto o la idea a representar.
-             <br><br>
-            En el enfoque documental, registro realidades desde una mirada cercana y respetuosa, priorizando la autenticidad y la honestidad visual.
-            Cada proyecto representa para mí una oportunidad de contar historias con intención, generar conexión con el espectador y transformar momentos reales en imágenes significativas.
+                Soy <strong>Mateo Gallego</strong>, un fotógrafo colombiano enfocado en la creación de narrativas visuales que combinan estética y emoción. Mi trabajo busca capturar la esencia de cada momento a través de una mirada artística y técnica.
             </p>
         </div>
     </div>
@@ -208,23 +198,11 @@
 
 <section id="galeria">
     <div class="separador revelar"></div>
-    <h2 style="font-family: 'Syne'; letter-spacing: 10px; margin-bottom: 20px;" class="revelar">PORTAFOLIO</h2>
-
-    <div class="contenedor-filtro revelar">
-        <select class="select-personalizado" onchange="navegarGaleria(this.value)">
-            <option value="" disabled selected>Explorar por categoría</option>
-            <optgroup label="Retratos">
-                <option value="larry">Larry Arias</option>
-                <option value="santiago">Santiago Castro</option>
-            </optgroup>
-            <option value="street">Street Photography</option>
-            <option value="producto">Producto</option>
-        </select>
-    </div>
+    <h2 style="text-align: center; font-family: 'Syne'; letter-spacing: 10px; margin-bottom: 40px;" class="revelar">PORTAFOLIO</h2>
 
     <div class="presentacion-container revelar" id="slideshow"></div>
 
-    <div class="seccion-fotos revelar" id="sec-retratos">
+    <div class="seccion-fotos revelar" id="seccion-retratos">
         <h2 class="titulo-categoria">Retratos</h2>
         <div class="contenedor-botones">
             <button class="btn-modelo activo-btn" onclick="verModelo('larry', this)">Larry Arias</button>
@@ -249,7 +227,7 @@
         </div>
     </div>
 
-    <div class="seccion-fotos revelar" id="sec-street">
+    <div class="seccion-fotos revelar" id="seccion-street">
         <h2 class="titulo-categoria">Street Photography</h2>
         <div class="galeria-grid" id="gal-street">
             <img src="street/foto1.jpg" onclick="abrirVisor(this, 'gal-street')">
@@ -259,7 +237,7 @@
         </div>
     </div>
 
-    <div class="seccion-fotos revelar" id="sec-producto">
+    <div class="seccion-fotos revelar" id="seccion-producto">
         <h2 class="titulo-categoria">Producto</h2>
         <div class="galeria-grid" id="gal-prod">
             <img src="producto/foto1.jpg" onclick="abrirVisor(this, 'gal-prod')">
@@ -297,22 +275,21 @@
     let indiceVisor = 0;
     let indiceSlide = 0;
     let autoSlideTimer;
-    let touchStartX = 0;
-    let touchEndX = 0;
 
-    // LÓGICA DEL MENÚ DESPLEGABLE
-    function navegarGaleria(valor) {
-        if (!valor) return;
-        
+    // Función unificada para navegar desde el menú superior
+    function irA(valor) {
         if (valor === 'larry' || valor === 'santiago') {
             const btn = document.querySelector(`button[onclick*="${valor}"]`);
             verModelo(valor, btn);
-            document.getElementById('sec-retratos').scrollIntoView();
-        } else {
-            document.getElementById('sec-' + valor).scrollIntoView();
+            document.getElementById('seccion-retratos').scrollIntoView();
+        } else if (valor === 'gal-street') {
+            document.getElementById('seccion-street').scrollIntoView();
+        } else if (valor === 'gal-prod') {
+            document.getElementById('seccion-producto').scrollIntoView();
         }
     }
 
+    // Lógica del Slideshow
     function cargarPresentacion() {
         const contenedor = document.getElementById('slideshow');
         const imgs = Array.from(document.querySelectorAll('.galeria-grid img'));
@@ -324,8 +301,6 @@
             contenedor.appendChild(div);
         });
         iniciarAutoSlide();
-        configurarTactil(document.getElementById('slideshow'), 'slide');
-        configurarTactil(document.getElementById('visor'), 'visor');
     }
 
     function cambiarSlide(dir) {
@@ -341,6 +316,7 @@
     function iniciarAutoSlide() { autoSlideTimer = setInterval(() => cambiarSlide('sig'), 5000); }
     function reiniciarAutoSlide() { clearInterval(autoSlideTimer); iniciarAutoSlide(); }
 
+    // Visor de fotos
     function abrirVisor(el, idGal) {
         const gal = document.getElementById(idGal);
         fotosActuales = Array.from(gal.querySelectorAll('img')).map(i => i.src);
@@ -354,46 +330,25 @@
         document.getElementById('contador-visor').innerText = `${indiceVisor + 1} / ${fotosActuales.length}`;
     }
 
-    function navegarVisor(dir) {
-        if (dir === 'sig') indiceVisor = (indiceVisor + 1) % fotosActuales.length;
-        else indiceVisor = (indiceVisor - 1 + fotosActuales.length) % fotosActuales.length;
-        actualizarVisor();
-    }
-
     function cerrarVisor() { document.getElementById('visor').style.display = 'none'; }
 
-    document.addEventListener('keydown', (e) => {
-        const visorAbierto = document.getElementById('visor').style.display === 'flex';
-        if (e.key === "ArrowRight") visorAbierto ? navegarVisor('sig') : cambiarSlide('sig');
-        if (e.key === "ArrowLeft") visorAbierto ? navegarVisor('ant') : cambiarSlide('ant');
-        if (e.key === "Escape") cerrarVisor();
-    });
-
-    function configurarTactil(elemento, tipo) {
-        elemento.addEventListener('touchstart', e => touchStartX = e.changedTouches[0].screenX);
-        elemento.addEventListener('touchend', e => {
-            touchEndX = e.changedTouches[0].screenX;
-            const diff = touchStartX - touchEndX;
-            if (Math.abs(diff) > 50) {
-                const dir = diff > 0 ? 'sig' : 'ant';
-                tipo === 'slide' ? cambiarSlide(dir) : navegarVisor(dir);
-            }
-        });
-    }
-
+    // Control de categorías de Retratos
     function verModelo(id, btn) {
         document.querySelectorAll('.modelo-content').forEach(m => m.style.display = 'none');
         document.querySelectorAll('.btn-modelo').forEach(b => b.classList.remove('activo-btn'));
         document.getElementById(id).style.display = 'block';
-        btn.classList.add('activo-btn');
+        if (btn) btn.classList.add('activo-btn');
     }
 
     window.onload = cargarPresentacion;
+    
+    // Revelado en Scroll
     const obs = new IntersectionObserver((es) => {
         es.forEach(e => { if (e.isIntersecting) e.target.classList.add('activo'); });
     }, { threshold: 0.1 });
     document.querySelectorAll('.revelar').forEach(el => obs.observe(el));
 
+    // Protección de pantalla
     window.addEventListener('blur', () => document.body.classList.add('protegido'));
     window.addEventListener('focus', () => document.body.classList.remove('protegido'));
 </script>
