@@ -29,24 +29,31 @@
         body.protegido { filter: blur(20px) grayscale(1); }
         img { -webkit-user-drag: none; user-drag: none; pointer-events: auto; }
 
-        /* NAVEGACIÓN */
+        /* NAVEGACIÓN ALINEADA */
         nav {
             position: fixed; top: 0; left: 0; width: 100%; padding: 25px 0;
-            display: flex; justify-content: center; gap: 40px;
+            display: flex; justify-content: center; align-items: center; gap: 40px;
             background: rgba(13, 13, 13, 0.95);
             backdrop-filter: blur(15px); z-index: 1000;
             border-bottom: 1px solid rgba(255,255,255,0.05);
         }
 
-        .nav-item { position: relative; display: inline-block; }
-
+        /* Estilo base para enlaces y botón de galería */
         nav a, .dropbtn {
             color: white; text-decoration: none; font-family: 'Syne'; font-size: 0.7rem;
             text-transform: uppercase; letter-spacing: 3px; transition: 0.3s;
-            opacity: 0.6; background: none; border: none; cursor: pointer; padding: 10px 0;
+            opacity: 0.6; background: none; border: none; cursor: pointer; 
+            padding: 0; margin: 0; display: flex; align-items: center;
+            height: 20px; /* Altura fija para alineación perfecta */
         }
 
         nav a:hover, .nav-item:hover .dropbtn { opacity: 1; color: var(--accent-color); }
+
+        .nav-item { 
+            position: relative; 
+            display: flex; 
+            align-items: center; 
+        }
 
         /* DESPLEGABLE CORREGIDO */
         .dropdown-content {
@@ -54,31 +61,30 @@
             transform: translateX(-50%); background-color: #111;
             min-width: 220px; box-shadow: 0px 10px 30px rgba(0,0,0,0.9);
             z-index: 1100; border: 1px solid rgba(255,255,255,0.1);
-            padding: 10px 0;
+            padding: 10px 0; margin-top: 15px; /* Separación del nav */
         }
 
         .dropdown-content a {
             color: white; padding: 12px 20px; text-decoration: none;
             display: block; font-size: 0.65rem; letter-spacing: 2px;
             opacity: 0.8; transition: 0.2s; text-align: center;
-            cursor: pointer;
+            cursor: pointer; height: auto; /* Reset para el submenú */
         }
 
         .dropdown-content a:hover { background-color: #222; opacity: 1; color: #fff; }
         .nav-item:hover .dropdown-content { display: block; }
 
-        /* FONDO */
+        /* FONDO ANIMADO */
         body::before {
             content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-image: url('fondo.png'); background-size: cover; background-position: center;
             opacity: 0.1; z-index: -1; pointer-events: none;
             animation: slowPan 30s infinite alternate ease-in-out;
         }
-
         @keyframes slowPan { from { transform: scale(1); } to { transform: scale(1.1) translate(10px, 10px); } }
 
-        /* HEADER */
-        header { padding: 180px 20px 80px 20px; text-align: center; scroll-margin-top: 100px; }
+        /* SECCIONES Y HEADER */
+        header { padding: 180px 20px 80px 20px; text-align: center; scroll-margin-top: 120px; }
         .banner-superior { max-width: 450px; width: 100%; height: auto; margin-bottom: 30px; animation: float 6s infinite ease-in-out; }
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
 
@@ -91,7 +97,6 @@
 
         header p { color: var(--text-gray); letter-spacing: 8px; text-transform: uppercase; font-size: 0.8rem; margin-top: 10px; }
 
-        /* SECCIONES */
         .revelar { opacity: 0; transform: translateY(30px); transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1); }
         .revelar.activo { opacity: 1; transform: translateY(0); }
         .separador { width: 50px; height: 1px; background: rgba(255,255,255,0.2); margin: 0 auto 80px auto; }
@@ -133,7 +138,7 @@
         #contador-visor { position: absolute; bottom: 40px; font-family: 'Syne'; letter-spacing: 5px; font-size: 0.8rem; }
 
         /* SOBRE MÍ */
-        #sobre-mi { padding: var(--section-padding); }
+        #sobre-mi { padding: var(--section-padding); scroll-margin-top: 80px; }
         .bio-container { 
             max-width: 950px; margin: 0 auto; padding: 60px; 
             background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05);
@@ -146,14 +151,15 @@
         #contacto { padding: 120px 20px; text-align: center; background: #050505; }
         .redes a { color: white; text-decoration: none; margin: 0 20px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 4px; opacity: 0.5; transition: 0.3s; }
 
-        /* BOTONES FLOTANTES */
+        /* FLOTANTES */
         .wsp-flotante, .ig-flotante { position: fixed; right: 30px; width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; z-index: 100; transition: 0.3s; }
         .wsp-flotante { bottom: 30px; background-color: #25d366; }
         .ig-flotante { bottom: 105px; background: linear-gradient(45deg, #f09433, #dc2743, #bc1888); }
         .wsp-flotante svg, .ig-flotante svg { width: 30px; height: 30px; fill: white; }
 
         @media (max-width: 800px) { 
-            nav { gap: 15px; }
+            nav { gap: 15px; padding: 15px 0; }
+            nav a, .dropbtn { font-size: 0.6rem; letter-spacing: 1px; }
             .bio-container { flex-direction: column; padding: 40px 20px; text-align: center; }
             .foto-perfil { flex: 0 0 250px; width: 250px; height: 250px; border-radius: 50%; }
         }
@@ -165,7 +171,7 @@
     <a href="#inicio">Inicio</a>
     <a href="#sobre-mi">Sobre Mí</a>
     <div class="nav-item">
-        <a href="#galeria" class="dropbtn">Galería</a>
+        <button class="dropbtn" onclick="location.href='#galeria'">Galería</button>
         <div class="dropdown-content">
             <a onclick="irA('larry')">Retrato: Larry</a>
             <a onclick="irA('santiago')">Retrato: Santiago</a>
