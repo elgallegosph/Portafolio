@@ -136,8 +136,8 @@
     <div class="bio-info">
         <h2 class="titulo-categoria">Sobre Mí</h2>
         <p class="bio-texto">
-            Soy <strong>Mateo Gallego</strong> un fotógrafo colombiano con experiencia en fotografía editorial, de estudio y documental. 
-            <br><br>Mi trabajo utiliza la luz y la composición como herramientas para comunicar ideas y sensaciones, buscando transformar momentos reales en imágenes significativas.
+            Soy <strong>Mateo Gallego</strong> un fotógrafo colombiano enfocado en la creación de narrativas visuales que combinan estética, concepto y emoción.
+            <br><br>Mi trabajo utiliza la luz y la composición como herramientas para comunicar ideas y sensaciones.
         </p>
     </div>
 </section>
@@ -188,7 +188,7 @@
     // ==========================================
     const cloudName = "mateosax1998"; 
 
-    // Ajusta la 'cantidad' según cuántas fotos subas a cada carpeta
+    // Aquí defines cuántas fotos hay en cada carpeta
     const modelosConfig = [
         { id: "larry", carpeta: "Larry_Arias", cantidad: 8 },
         { id: "santiago", carpeta: "Santiago_Castro", cantidad: 2 },
@@ -205,15 +205,19 @@
 
             for (let i = 1; i <= modelo.cantidad; i++) {
                 const img = document.createElement('img');
-                // URL optimizada (q_auto: calidad automática, f_auto: formato automático)
+                // IMPORTANTE: Busca archivos llamados 1.jpg, 2.jpg...
                 img.src = `https://res.cloudinary.com/${cloudName}/image/upload/q_auto,f_auto/${modelo.carpeta}/${i}.jpg`;
                 img.loading = "lazy";
+                
+                // Si la foto no existe o no se llama por su número, no muestra error visual
+                img.onerror = function() { this.style.display = 'none'; };
+                
                 img.onclick = function() { abrirFoto(this); };
                 contenedor.appendChild(img);
             }
         });
         
-        setTimeout(cargarPresentacion, 800);
+        setTimeout(cargarPresentacion, 1000);
     }
 
     function cargarPresentacion() {
