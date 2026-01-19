@@ -143,10 +143,12 @@
         .foto-perfil { flex: 0 0 300px; height: 400px; object-fit: cover; border-radius: 20px; filter: grayscale(1); }
 
         /* CONTACTO */
-        #contacto { padding: 120px 20px; text-align: center; background: #050505; }
+        #contacto { padding: 120px 20px 60px 20px; text-align: center; background: #050505; }
         .titulo-contacto { font-family: 'Syne'; letter-spacing: 12px; font-size: 1.2rem; margin-bottom: 40px; text-transform: uppercase; }
+        .redes { margin-bottom: 60px; }
         .redes a { color: white; text-decoration: none; margin: 0 20px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 4px; opacity: 0.5; transition: 0.3s; }
         .redes a:hover { opacity: 1; }
+        .copyright { font-size: 0.6rem; color: #444; letter-spacing: 2px; text-transform: uppercase; }
 
         /* FLOTANTES */
         .wsp-flotante, .ig-flotante { position: fixed; right: 30px; width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; z-index: 100; transition: 0.3s; }
@@ -158,6 +160,7 @@
             nav { gap: 15px; }
             .bio-container { flex-direction: column; padding: 40px 20px; text-align: center; }
             .foto-perfil { flex: 0 0 250px; width: 250px; height: 250px; border-radius: 50%; }
+            .redes a { display: block; margin: 20px 0; }
         }
     </style>
 </head>
@@ -250,6 +253,9 @@
     <div class="redes revelar">
         <a href="https://instagram.com/_soy_mateo_" target="_blank">Instagram</a>
         <a href="mailto:mateogallego@ejemplo.com">Email</a>
+    </div>
+    <div class="copyright revelar">
+        © 2026 Mateo Gallego. Todos los derechos reservados.
     </div>
 </footer>
 
