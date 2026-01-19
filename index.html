@@ -29,7 +29,7 @@
         body.protegido { filter: blur(20px) grayscale(1); }
         img { -webkit-user-drag: none; user-drag: none; pointer-events: auto; }
 
-        /* NAVEGACIÓN CON MENÚ DESPLEGABLE */
+        /* NAVEGACIÓN */
         nav {
             position: fixed; top: 0; left: 0; width: 100%; padding: 25px 0;
             display: flex; justify-content: center; gap: 40px;
@@ -43,25 +43,28 @@
         nav a, .dropbtn {
             color: white; text-decoration: none; font-family: 'Syne'; font-size: 0.7rem;
             text-transform: uppercase; letter-spacing: 3px; transition: 0.3s;
-            opacity: 0.6; background: none; border: none; cursor: pointer; padding: 0;
+            opacity: 0.6; background: none; border: none; cursor: pointer; padding: 10px 0;
         }
 
         nav a:hover, .nav-item:hover .dropbtn { opacity: 1; color: var(--accent-color); }
 
+        /* DESPLEGABLE CORREGIDO */
         .dropdown-content {
             display: none; position: absolute; top: 100%; left: 50%;
             transform: translateX(-50%); background-color: #111;
-            min-width: 200px; box-shadow: 0px 10px 30px rgba(0,0,0,0.8);
-            z-index: 1100; margin-top: 15px; border: 1px solid rgba(255,255,255,0.1);
+            min-width: 220px; box-shadow: 0px 10px 30px rgba(0,0,0,0.9);
+            z-index: 1100; border: 1px solid rgba(255,255,255,0.1);
+            padding: 10px 0;
         }
 
         .dropdown-content a {
-            color: white; padding: 12px 16px; text-decoration: none;
-            display: block; font-size: 0.6rem; letter-spacing: 2px;
-            opacity: 0.7; transition: 0.2s; text-align: center;
+            color: white; padding: 12px 20px; text-decoration: none;
+            display: block; font-size: 0.65rem; letter-spacing: 2px;
+            opacity: 0.8; transition: 0.2s; text-align: center;
+            cursor: pointer;
         }
 
-        .dropdown-content a:hover { background-color: #222; opacity: 1; }
+        .dropdown-content a:hover { background-color: #222; opacity: 1; color: #fff; }
         .nav-item:hover .dropdown-content { display: block; }
 
         /* FONDO */
@@ -74,7 +77,7 @@
 
         @keyframes slowPan { from { transform: scale(1); } to { transform: scale(1.1) translate(10px, 10px); } }
 
-        /* HEADER / INICIO */
+        /* HEADER */
         header { padding: 180px 20px 80px 20px; text-align: center; scroll-margin-top: 100px; }
         .banner-superior { max-width: 450px; width: 100%; height: auto; margin-bottom: 30px; animation: float 6s infinite ease-in-out; }
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
@@ -99,7 +102,6 @@
             max-width: 1100px; margin: 0 auto 100px auto;
             position: relative; overflow: hidden; height: 70vh; 
             display: flex; align-items: center; justify-content: center;
-            cursor: grab;
         }
         .slide {
             position: absolute; width: 100%; height: 100%; opacity: 0;
@@ -143,9 +145,8 @@
         /* CONTACTO */
         #contacto { padding: 120px 20px; text-align: center; background: #050505; }
         .redes a { color: white; text-decoration: none; margin: 0 20px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 4px; opacity: 0.5; transition: 0.3s; }
-        .redes a:hover { opacity: 1; }
 
-        /* FLOTANTES */
+        /* BOTONES FLOTANTES */
         .wsp-flotante, .ig-flotante { position: fixed; right: 30px; width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; z-index: 100; transition: 0.3s; }
         .wsp-flotante { bottom: 30px; background-color: #25d366; }
         .ig-flotante { bottom: 105px; background: linear-gradient(45deg, #f09433, #dc2743, #bc1888); }
@@ -164,12 +165,12 @@
     <a href="#inicio">Inicio</a>
     <a href="#sobre-mi">Sobre Mí</a>
     <div class="nav-item">
-        <button class="dropbtn" onclick="location.href='#galeria'">Galería</button>
+        <a href="#galeria" class="dropbtn">Galería</a>
         <div class="dropdown-content">
-            <a href="javascript:void(0)" onclick="irA('larry')">Retrato: Larry</a>
-            <a href="javascript:void(0)" onclick="irA('santiago')">Retrato: Santiago</a>
-            <a href="javascript:void(0)" onclick="irA('gal-street')">Street Photography</a>
-            <a href="javascript:void(0)" onclick="irA('gal-prod')">Producto</a>
+            <a onclick="irA('larry')">Retrato: Larry</a>
+            <a onclick="irA('santiago')">Retrato: Santiago</a>
+            <a onclick="irA('gal-street')">Street Photography</a>
+            <a onclick="irA('gal-prod')">Producto</a>
         </div>
     </div>
     <a href="#contacto">Contacto</a>
@@ -188,7 +189,7 @@
         <div class="bio-info">
             <h2>Sobre Mí</h2>
             <p class="bio-texto">
-                Soy <strong>Mateo Gallego</strong>, un fotógrafo colombiano enfocado en la creación de narrativas visuales que combinan estética y emoción. Mi trabajo busca capturar la esencia de cada momento.
+                Soy <strong>Mateo Gallego</strong>, un fotógrafo colombiano enfocado en la creación de narrativas visuales que combinan estética y emoción.
             </p>
         </div>
     </div>
@@ -270,7 +271,8 @@
             verModelo(valor, btn);
             document.getElementById('seccion-retratos').scrollIntoView();
         } else {
-            document.getElementById('seccion-' + valor.split('-')[1]).scrollIntoView();
+            const id = valor === 'gal-street' ? 'seccion-street' : 'seccion-producto';
+            document.getElementById(id).scrollIntoView();
         }
     }
 
