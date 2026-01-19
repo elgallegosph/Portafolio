@@ -206,7 +206,7 @@
             for (let i = 1; i <= modelo.cantidad; i++) {
                 const img = document.createElement('img');
                 // IMPORTANTE: Busca archivos llamados 1.jpg, 2.jpg...
-                img.src = `https://res.cloudinary.com/${cloudName}/image/upload/q_auto,f_auto/${modelo.carpeta}/${i}.jpg`;
+                img.src = `https://res.cloudinary.com/${cloudName}/image/upload/q_auto,f_auto/${modelo.carpeta}/${i}.JPG`;
                 img.loading = "lazy";
                 
                 // Si la foto no existe o no se llama por su número, no muestra error visual
