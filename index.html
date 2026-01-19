@@ -151,10 +151,23 @@
         .redes a:hover { opacity: 1; }
         .copyright { font-size: 0.6rem; color: #444; letter-spacing: 2px; text-transform: uppercase; }
 
-        /* BOTONES FLOTANTES - MEJORADOS */
+        /* BOTONES FLOTANTES - MEJORADOS CON EFECTOS DE MOVIMIENTO */
         @keyframes slideInRight {
             from { transform: translateX(100px); opacity: 0; }
             to { transform: translateX(0); opacity: 1; }
+        }
+
+        /* Efecto de flotación infinita suave */
+        @keyframes floatingEffect {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
+        }
+
+        /* Efecto de pulso de luz sutil */
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+            50% { box-shadow: 0 0 20px rgba(255,255,255,0.1); }
+            100% { box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
         }
 
         .fb-flotante, .ig-flotante, .wsp-flotante { 
@@ -163,25 +176,31 @@
             align-items: center; z-index: 1000; 
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
             box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-            animation: slideInRight 0.8s ease backwards;
+            
+            /* Animación de entrada + Flotación + Pulso */
+            animation: 
+                slideInRight 0.8s ease backwards, 
+                floatingEffect 4s infinite ease-in-out,
+                pulseGlow 3s infinite ease-in-out;
         }
 
-        /* Tiempos de animación escalonados */
-        .fb-flotante { bottom: 170px; background-color: #1877F2; animation-delay: 0.2s; }
-        .ig-flotante { bottom: 100px; background: linear-gradient(45deg, #f09433, #dc2743, #bc1888); animation-delay: 0.4s; }
-        .wsp-flotante { bottom: 30px; background-color: #25d366; animation-delay: 0.6s; }
+        /* Tiempos desfasados para que no se muevan en bloque */
+        .fb-flotante { bottom: 170px; background-color: #1877F2; animation-delay: 0.2s, 0s, 0s; }
+        .ig-flotante { bottom: 100px; background: linear-gradient(45deg, #f09433, #dc2743, #bc1888); animation-delay: 0.4s, 0.5s, 1s; }
+        .wsp-flotante { bottom: 30px; background-color: #25d366; animation-delay: 0.6s, 1s, 2s; }
 
         .fb-flotante svg, .ig-flotante svg, .wsp-flotante svg { width: 25px; height: 25px; fill: white; transition: 0.3s; }
 
         /* Efectos Hover */
         .fb-flotante:hover, .ig-flotante:hover, .wsp-flotante:hover { 
+            animation-play-state: paused; /* Detiene el movimiento al interactuar */
             transform: scale(1.15) rotate(8deg); 
-            box-shadow: 0 0 20px rgba(255,255,255,0.2), inset 0 0 10px rgba(255,255,255,0.3);
+            box-shadow: 0 0 25px rgba(255,255,255,0.2), inset 0 0 10px rgba(255,255,255,0.3);
         }
         
-        .fb-flotante:hover { box-shadow: 0 0 25px rgba(24, 119, 242, 0.6); }
-        .ig-flotante:hover { box-shadow: 0 0 25px rgba(220, 39, 67, 0.6); }
-        .wsp-flotante:hover { box-shadow: 0 0 25px rgba(37, 211, 102, 0.6); }
+        .fb-flotante:hover { box-shadow: 0 0 25px rgba(24, 119, 242, 0.7); }
+        .ig-flotante:hover { box-shadow: 0 0 25px rgba(220, 39, 67, 0.7); }
+        .wsp-flotante:hover { box-shadow: 0 0 25px rgba(37, 211, 102, 0.7); }
 
         .fb-flotante:active, .ig-flotante:active, .wsp-flotante:active { transform: scale(0.9); }
 
