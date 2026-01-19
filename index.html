@@ -60,6 +60,7 @@
             max-width: 1100px; margin: 0 auto 100px auto;
             position: relative; overflow: hidden; height: 80vh; 
             background: transparent; display: flex; align-items: center; justify-content: center;
+            touch-action: pan-y;
         }
 
         .slide {
@@ -71,6 +72,7 @@
 
         .slide.active { opacity: 1; z-index: 2; transform: scale(1) translateY(0); }
         .slide img { max-width: 95%; max-height: 95%; object-fit: contain; filter: drop-shadow(0 20px 40px rgba(0,0,0,0.8)); }
+        .slide-overlay { position: absolute; bottom: 20px; width: 100%; text-align: center; font-family: 'Syne'; font-size: 0.7rem; letter-spacing: 8px; color: rgba(255,255,255,0.4); z-index: 10; text-transform: uppercase; }
 
         /* --- BIOGRAFÍA --- */
         .bio-container { 
@@ -93,14 +95,15 @@
         .galeria img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 8px; cursor: pointer; transition: 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); filter: grayscale(0.3); }
         .galeria img:hover { transform: scale(1.02); filter: grayscale(0); }
 
-        /* --- VISOR CORREGIDO --- */
+        /* --- VISOR --- */
         #visor {
             display: none; position: fixed; z-index: 2000; top: 0; left: 0;
             width: 100%; height: 100%; background: rgba(0,0,0,0.98);
             justify-content: center; align-items: center; backdrop-filter: blur(25px);
-            touch-action: none; /* Evita scroll mientras el visor está abierto */
+            touch-action: none;
         }
         #visor img { max-width: 90%; max-height: 90%; object-fit: contain; }
+        #contador-visor { position: absolute; bottom: 30px; font-family: 'Syne'; font-size: 0.8rem; letter-spacing: 3px; color: var(--text-gray); }
 
         /* --- BOTONES FLOTANTES --- */
         .wsp-flotante, .ig-flotante { position: fixed; right: 30px; width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; z-index: 100; transition: 0.3s; }
@@ -166,25 +169,26 @@
 
 <section class="seccion revelar">
     <h2 class="titulo-categoria">Street Photography</h2>
-    <div class="galeria" id="galeria-street">
-        <img src="street/foto1.jpg" onclick="abrirVisor(this, 'galeria-street')">
-        <img src="street/foto2.jpg" onclick="abrirVisor(this, 'galeria-street')">
-        <img src="street/foto3.jpg" onclick="abrirVisor(this, 'galeria-street')">
-        <img src="street/foto4.jpg" onclick="abrirVisor(this, 'galeria-street')">
+    <div class="galeria" id="gal-street">
+        <img src="street/foto1.jpg" onclick="abrirVisor(this, 'gal-street')">
+        <img src="street/foto2.jpg" onclick="abrirVisor(this, 'gal-street')">
+        <img src="street/foto3.jpg" onclick="abrirVisor(this, 'gal-street')">
+        <img src="street/foto4.jpg" onclick="abrirVisor(this, 'gal-street')">
     </div>
 </section>
 
 <section class="seccion revelar">
     <h2 class="titulo-categoria">Producto</h2>
-    <div class="galeria" id="galeria-producto">
-        <img src="producto/foto1.jpg" onclick="abrirVisor(this, 'galeria-producto')">
-        <img src="producto/foto2.jpg" onclick="abrirVisor(this, 'galeria-producto')">
-        <img src="producto/foto3.jpg" onclick="abrirVisor(this, 'galeria-producto')">
+    <div class="galeria" id="gal-prod">
+        <img src="producto/foto1.jpg" onclick="abrirVisor(this, 'gal-prod')">
+        <img src="producto/foto2.jpg" onclick="abrirVisor(this, 'gal-prod')">
+        <img src="producto/foto3.jpg" onclick="abrirVisor(this, 'gal-prod')">
     </div>
 </section>
 
 <div id="visor" onclick="cerrarVisor()">
     <img id="fotoGrande" src="">
+    <div id="contador-visor"></div>
 </div>
 
 <a href="https://instagram.com/_soy_mateo_" class="ig-flotante" target="_blank">
@@ -197,7 +201,7 @@
 <footer>
     <div class="redes">
         <a href="https://instagram.com/_soy_mateo_" target="_blank">Instagram</a>
-        <a href="mailto:tuemail@ejemplo.com">Contacto</a>
+        <a href="mailto:mateogallego@ejemplo.com">Contacto</a>
     </div>
     <p style="font-size: 0.6rem; color: #333; margin-top: 20px;">© 2024 M.G. VISUALS — PROTEGIDO</p>
 </footer>
@@ -205,45 +209,52 @@
 <script>
     let fotosActuales = [];
     let indiceVisor = 0;
+    let indiceSlide = 0;
+    let autoSlideTimer;
     let touchStartX = 0;
     let touchEndX = 0;
 
-    // --- PRESENTACIÓN AUTO ---
+    // --- CARGAR PRESENTACIÓN ---
     function cargarPresentacion() {
-        const contenedorSlides = document.getElementById('slideshow');
-        const todasLasFotos = Array.from(document.querySelectorAll('.galeria img'));
-        todasLasFotos.sort(() => Math.random() - 0.5);
-        todasLasFotos.forEach((img, index) => {
+        const contenedor = document.getElementById('slideshow');
+        const imgs = Array.from(document.querySelectorAll('.galeria img'));
+        imgs.sort(() => Math.random() - 0.5);
+        imgs.forEach((img, i) => {
             const div = document.createElement('div');
-            div.className = index === 0 ? 'slide active' : 'slide';
+            div.className = i === 0 ? 'slide active' : 'slide';
             div.innerHTML = `<img src="${img.src}">`;
-            contenedorSlides.appendChild(div);
+            contenedor.appendChild(div);
         });
-        setInterval(() => {
-           const slides = document.querySelectorAll('.slide');
-           if (slides.length < 2) return;
-           slides[indiceVisorSlide].classList.remove('active');
-           indiceVisorSlide = (indiceVisorSlide + 1) % slides.length;
-           slides[indiceVisorSlide].classList.add('active');
-        }, 5000); 
+        iniciarAutoSlide();
+        configurarTactil(document.getElementById('slideshow'), 'slide');
+        configurarTactil(document.getElementById('visor'), 'visor');
     }
-    let indiceVisorSlide = 0;
 
-    // --- VISOR DE FOTOS ---
-    function abrirVisor(elemento, idContenedor) {
-        const contenedor = document.getElementById(idContenedor);
-        fotosActuales = Array.from(contenedor.querySelectorAll('img')).map(i => i.src);
-        indiceVisor = fotosActuales.indexOf(elemento.src);
+    function cambiarSlide(dir) {
+        const slides = document.querySelectorAll('.slide');
+        if (slides.length < 2) return;
+        slides[indiceSlide].classList.remove('active');
+        if (dir === 'sig') indiceSlide = (indiceSlide + 1) % slides.length;
+        else indiceSlide = (indiceSlide - 1 + slides.length) % slides.length;
+        slides[indiceSlide].classList.add('active');
+        reiniciarAutoSlide();
+    }
+
+    function iniciarAutoSlide() { autoSlideTimer = setInterval(() => cambiarSlide('sig'), 5000); }
+    function reiniciarAutoSlide() { clearInterval(autoSlideTimer); iniciarAutoSlide(); }
+
+    // --- VISOR ---
+    function abrirVisor(el, idGal) {
+        const gal = document.getElementById(idGal);
+        fotosActuales = Array.from(gal.querySelectorAll('img')).map(i => i.src);
+        indiceVisor = fotosActuales.indexOf(el.src);
         actualizarVisor();
         document.getElementById('visor').style.display = 'flex';
     }
 
     function actualizarVisor() {
         document.getElementById('fotoGrande').src = fotosActuales[indiceVisor];
-    }
-
-    function cerrarVisor() {
-        document.getElementById('visor').style.display = 'none';
+        document.getElementById('contador-visor').innerText = `${indiceVisor + 1} / ${fotosActuales.length}`;
     }
 
     function navegarVisor(dir) {
@@ -252,24 +263,29 @@
         actualizarVisor();
     }
 
-    // --- CONTROLES (TECLADO Y SWIPE) ---
+    function cerrarVisor() { document.getElementById('visor').style.display = 'none'; }
+
+    // --- CONTROLES TECLADO ---
     document.addEventListener('keydown', (e) => {
-        if (document.getElementById('visor').style.display === 'flex') {
-            if (e.key === "ArrowRight") navegarVisor('sig');
-            if (e.key === "ArrowLeft") navegarVisor('ant');
-            if (e.key === "Escape") cerrarVisor();
-        }
+        const visorAbierto = document.getElementById('visor').style.display === 'flex';
+        if (e.key === "ArrowRight") visorAbierto ? navegarVisor('sig') : cambiarSlide('sig');
+        if (e.key === "ArrowLeft") visorAbierto ? navegarVisor('ant') : cambiarSlide('ant');
+        if (e.key === "Escape") cerrarVisor();
     });
 
-    const visorEl = document.getElementById('visor');
-    visorEl.addEventListener('touchstart', e => touchStartX = e.changedTouches[0].screenX);
-    visorEl.addEventListener('touchend', e => {
-        touchEndX = e.changedTouches[0].screenX;
-        if (touchEndX < touchStartX - 50) navegarVisor('sig');
-        if (touchEndX > touchStartX + 50) navegarVisor('ant');
-    });
+    // --- CONTROLES TÁCTILES ---
+    function configurarTactil(elemento, tipo) {
+        elemento.addEventListener('touchstart', e => touchStartX = e.changedTouches[0].screenX);
+        elemento.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            const diff = touchStartX - touchEndX;
+            if (Math.abs(diff) > 50) {
+                const dir = diff > 0 ? 'sig' : 'ant';
+                tipo === 'slide' ? cambiarSlide(dir) : navegarVisor(dir);
+            }
+        });
+    }
 
-    // --- OTROS ---
     function verModelo(id, btn) {
         document.querySelectorAll('.modelo-content').forEach(m => m.style.display = 'none');
         document.querySelectorAll('.btn-modelo').forEach(b => b.classList.remove('activo-btn'));
@@ -278,10 +294,10 @@
     }
 
     window.onload = cargarPresentacion;
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('activo'); });
+    const obs = new IntersectionObserver((es) => {
+        es.forEach(e => { if (e.isIntersecting) e.target.classList.add('activo'); });
     }, { threshold: 0.1 });
-    document.querySelectorAll('.revelar').forEach(el => observer.observe(el));
+    document.querySelectorAll('.revelar').forEach(el => obs.observe(el));
 
     window.addEventListener('blur', () => document.body.classList.add('protegido'));
     window.addEventListener('focus', () => document.body.classList.remove('protegido'));
