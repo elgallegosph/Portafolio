@@ -151,24 +151,46 @@
         .redes a:hover { opacity: 1; }
         .copyright { font-size: 0.6rem; color: #444; letter-spacing: 2px; text-transform: uppercase; }
 
-        /* BOTONES FLOTANTES */
-        .wsp-flotante, .ig-flotante, .fb-flotante { 
+        /* BOTONES FLOTANTES - MEJORADOS */
+        @keyframes slideInRight {
+            from { transform: translateX(100px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .fb-flotante, .ig-flotante, .wsp-flotante { 
             position: fixed; right: 30px; width: 55px; height: 55px; 
             border-radius: 50%; display: flex; justify-content: center; 
-            align-items: center; z-index: 1000; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+            align-items: center; z-index: 1000; 
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            animation: slideInRight 0.8s ease backwards;
         }
-        .wsp-flotante { bottom: 30px; background-color: #25d366; }
-        .ig-flotante { bottom: 100px; background: linear-gradient(45deg, #f09433, #dc2743, #bc1888); }
-        .fb-flotante { bottom: 170px; background-color: #1877F2; }
-        .wsp-flotante svg, .ig-flotante svg, .fb-flotante svg { width: 25px; height: 25px; fill: white; }
-        .wsp-flotante:hover, .ig-flotante:hover, .fb-flotante:hover { transform: scale(1.1) translateY(-5px); }
+
+        /* Tiempos de animación escalonados */
+        .fb-flotante { bottom: 170px; background-color: #1877F2; animation-delay: 0.2s; }
+        .ig-flotante { bottom: 100px; background: linear-gradient(45deg, #f09433, #dc2743, #bc1888); animation-delay: 0.4s; }
+        .wsp-flotante { bottom: 30px; background-color: #25d366; animation-delay: 0.6s; }
+
+        .fb-flotante svg, .ig-flotante svg, .wsp-flotante svg { width: 25px; height: 25px; fill: white; transition: 0.3s; }
+
+        /* Efectos Hover */
+        .fb-flotante:hover, .ig-flotante:hover, .wsp-flotante:hover { 
+            transform: scale(1.15) rotate(8deg); 
+            box-shadow: 0 0 20px rgba(255,255,255,0.2), inset 0 0 10px rgba(255,255,255,0.3);
+        }
+        
+        .fb-flotante:hover { box-shadow: 0 0 25px rgba(24, 119, 242, 0.6); }
+        .ig-flotante:hover { box-shadow: 0 0 25px rgba(220, 39, 67, 0.6); }
+        .wsp-flotante:hover { box-shadow: 0 0 25px rgba(37, 211, 102, 0.6); }
+
+        .fb-flotante:active, .ig-flotante:active, .wsp-flotante:active { transform: scale(0.9); }
 
         @media (max-width: 800px) { 
             nav { gap: 15px; }
             .bio-container { flex-direction: column; padding: 40px 20px; text-align: center; }
             .foto-perfil { flex: 0 0 250px; width: 250px; height: 250px; border-radius: 50%; }
             .redes a { display: block; margin: 20px 0; }
+            .fb-flotante, .ig-flotante, .wsp-flotante { right: 15px; width: 50px; height: 50px; }
         }
     </style>
 </head>
@@ -359,7 +381,6 @@
         if (btn) btn.classList.add('activo-btn');
     }
 
-    // --- CONTROLES DE TECLADO Y TÁCTILES ---
     document.addEventListener('keydown', (e) => {
         if (document.getElementById('visor').style.display === 'flex') {
             if (e.key === 'ArrowRight') navegarVisor('sig');
@@ -371,15 +392,14 @@
         }
     });
 
-    // Soporte para gestos en móvil
     document.addEventListener('touchstart', e => touchStartX = e.changedTouches[0].screenX);
     document.addEventListener('touchend', e => {
         let touchEndX = e.changedTouches[0].screenX;
-        if (touchEndX < touchStartX - 50) { // Deslizar izquierda -> Siguiente
+        if (touchEndX < touchStartX - 50) { 
             if (document.getElementById('visor').style.display === 'flex') navegarVisor('sig');
             else cambiarSlide('sig');
         }
-        if (touchEndX > touchStartX + 50) { // Deslizar derecha -> Anterior
+        if (touchEndX > touchStartX + 50) { 
             if (document.getElementById('visor').style.display === 'flex') navegarVisor('prev');
             else cambiarSlide('prev');
         }
